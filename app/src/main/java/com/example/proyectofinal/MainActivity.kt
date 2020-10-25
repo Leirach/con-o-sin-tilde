@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("TAG", "Hallo")
             val juego_numero = arregloJuegos[index]
             val intent = Intent(this, ActivityJuegos::class.java).apply {
-            putExtra("com.example.MainActivity2.extra.MESSAGE", juego_numero)
+            putExtra("com.example.ActivityJuegos.extra.MESSAGE", juego_numero)
             }
             startActivityForResult(intent, TEXT_REQUEST)
         }
