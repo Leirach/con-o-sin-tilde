@@ -9,12 +9,36 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="@string/fragment_animacion" />
 
     <Button
         android:id="@+id/continuar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Continuar" />
+
+    <RelativeLayout
+        android:id="@+id/sega"
+        android:name="com.example.proyectofinal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        />
+
+    <RelativeLayout
+        android:id="@+id/contexto"
+        android:name="com.example.proyectofinal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        />
+
+    <RelativeLayout
+        android:id="@+id/hiato"
+        android:name="com.example.proyectofinal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        />
 
 </RelativeLayout>

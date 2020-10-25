@@ -25,7 +25,7 @@ class ActivityJuegos : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = FragmentAnimacion.newInstance("test1", number)
+        val fragment = FragmentAnimacion.newInstance("string", number)
         fragmentTransaction.replace(R.id.animacion, fragment).addToBackStack(null).commit()
 
     }

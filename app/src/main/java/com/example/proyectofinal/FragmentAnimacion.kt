@@ -1,6 +1,7 @@
 package com.example.proyectofinal
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ private const val ARG_PARAM2 = "param2"
 class FragmentAnimacion : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
+    private var param2: Int? = null
 
     lateinit var botonContinuar: Button
 
@@ -28,7 +29,7 @@ class FragmentAnimacion : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param2 = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -37,11 +38,29 @@ class FragmentAnimacion : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.animacion, container, false)
+        val rootView: View = inflater.inflate(R.layout.animacion, container, false)
+        botonContinuar = rootView.findViewById<Button>(R.id.continuar)
 
-        if
+        botonContinuar.setOnClickListener {
+            if (param2 == 0) {
+                val fragment = FragmentSega.newInstance("string", "test")
+                val ft = childFragmentManager.beginTransaction()
+                ft.replace(R.id.sega, fragment).commit()
+            } else if (param2 == 1) {
+                val fragment = FragmentSega.newInstance("string", "test")
+                val ft = childFragmentManager.beginTransaction()
+                ft.replace(R.id.contexto, fragment).commit()
+            } else {
+                val fragment = FragmentSega.newInstance("string", "test")
+                val ft = childFragmentManager.beginTransaction()
+                ft.replace(R.id.hiato, fragment).commit()
+
+            }
+        }
 
 
+
+        return rootView
     }
 
     companion object {
