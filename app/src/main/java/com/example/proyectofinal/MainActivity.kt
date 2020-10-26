@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,17 +31,19 @@ class MainActivity : AppCompatActivity() {
         boton_der = findViewById<Button>(R.id.right)
         image = findViewById(R.id.logoTema)
 
-        val arregloJuegos = arrayOf<Int>(1, 2, 3)
+        val arregloJuegos = arrayOf<Int>(R.id.sega, R.id.contexto, R.id.hiato)
+        val images = arrayOf(R.drawable.sega_logo, R.drawable.ejercito_mexicano, R.drawable.watermelon)
         var index: Int = 0;
 
 
         boton_juego.setOnClickListener {
             Log.d("TAG", "Hallo")
-            val juego_numero = arregloJuegos[index]
-            val intent = Intent(this, ActivityJuegos::class.java).apply {
-            putExtra("com.example.ActivityJuegos.extra.MESSAGE", juego_numero)
+            val juegoNumero = arregloJuegos[index]
+            val intent = Intent(this, AnimationActivity::class.java).apply {
+                putExtra("com.example.extra.GAME_MODE", juegoNumero)
             }
-            startActivityForResult(intent, TEXT_REQUEST)
+            startActivity(intent)
+            // startActivityForResult(intent, TEXT_REQUEST)
         }
 
         boton_izq.setOnClickListener(View.OnClickListener {view ->
@@ -70,15 +70,7 @@ class MainActivity : AppCompatActivity() {
                 index++
             }
 
-            if (index == 0) {
-                image.setImageResource(R.drawable.sega_logo);
-            } else if (index == 1) {
-                image.setImageResource(R.drawable.ejercito_mexicano);
-            } else if (index == 2) {
-                image.setImageResource(R.drawable.watermelon);
-            }
-
-
+            image.setImageResource(images[index])
         })
 
 

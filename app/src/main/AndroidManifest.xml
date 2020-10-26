@@ -10,9 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ActivityHiato"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ActivityContext"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AnimationActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ActivityReglaGeneral"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".ActivityJuegos"
             android:label="@string/title_activity_juegos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
