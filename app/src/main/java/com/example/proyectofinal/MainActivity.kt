@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.proyectofinal.db.AcentosViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +33,16 @@ class MainActivity : AppCompatActivity() {
         boton_izq = findViewById<Button>(R.id.left)
         boton_der = findViewById<Button>(R.id.right)
         image = findViewById(R.id.logoTema)
+
+        // ==== PRUEBA DB ====
+        val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
+        dbViewModel.words.observe(this, Observer { words ->
+            val allwords = words.map { item ->
+                return@map item.word
+            }
+            Log.d("TAG", allwords.joinToString(", "))
+        })
+        // ==== PRUEBA DB ====
 
         val arregloJuegos = arrayOf<Int>(R.id.sega, R.id.contexto, R.id.hiato)
         val images = arrayOf(R.drawable.sega_logo, R.drawable.ejercito_mexicano, R.drawable.watermelon)

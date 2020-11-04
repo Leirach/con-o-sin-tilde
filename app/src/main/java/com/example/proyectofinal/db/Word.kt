@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Entity
-class Words (
+@Entity(tableName = "words")
+class Word (
     @PrimaryKey(autoGenerate = true) var id: Int,
     var word: String) {
     constructor(word: String): this(0, word)
