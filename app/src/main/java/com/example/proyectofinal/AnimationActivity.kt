@@ -9,6 +9,7 @@ class AnimationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animation)
+
         var number: Int = intent.getIntExtra("com.example.extra.GAME_MODE", 0)
         val btnContinue = findViewById<Button>(R.id.continuar)
 

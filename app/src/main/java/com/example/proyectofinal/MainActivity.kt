@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         boton_juego = findViewById<Button>(R.id.button6)
         boton_izq = findViewById<Button>(R.id.left)
         boton_der = findViewById<Button>(R.id.right)
+        boton_leaderboard = findViewById<Button>(R.id.leaderboards)
         image = findViewById(R.id.logoTema)
 
         val arregloJuegos = arrayOf<Int>(R.id.sega, R.id.contexto, R.id.hiato)
@@ -71,6 +72,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             image.setImageResource(images[index])
+        })
+
+        boton_leaderboard.setOnClickListener({view  ->
+            Log.d("TAG", "Hallo Leaderboard")
+            val intent = Intent(this, Leaderboard::class.java).apply {
+                putExtra("com.example.extra.LEADERBOARD", "String")
+            }
+            startActivity(intent)
+            // startActivityForResult(intent, TEXT_REQUEST)
         })
 
 
