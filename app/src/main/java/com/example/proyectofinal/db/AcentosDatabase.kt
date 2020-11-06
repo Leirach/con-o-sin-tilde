@@ -9,10 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [Word::class], version = 1, exportSchema = false)
+@Database(entities = [ReglaGeneral::class], version = 1, exportSchema = false)
 abstract class AcentosDatabase : RoomDatabase() {
 
-    abstract fun wordDao(): WordDao
+    abstract fun reglaGeneralDao(): ReglaGeneralDao
 
     private class initCallback(
         private val scope: CoroutineScope
@@ -22,11 +22,19 @@ abstract class AcentosDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    var wordDao = database.wordDao()
+                    var rgdao = database.reglaGeneralDao()
                     // insert initial data
-                    wordDao.nukeTable()
-                    wordDao.insert(Word("test"))
-                    wordDao.insert(Word("test2"))
+                    rgdao.nukeTable()
+                    rgdao.insert(ReglaGeneral("prueba", "prue ba", false, 2))
+                    rgdao.insert(ReglaGeneral("sílaba", "si la ba", true, 3))
+                    rgdao.insert(ReglaGeneral("prueba", "prue ba", false, 2))
+                    rgdao.insert(ReglaGeneral("sílaba", "si la ba", true, 3))
+                    rgdao.insert(ReglaGeneral("prueba", "prue ba", false, 2))
+                    rgdao.insert(ReglaGeneral("sílaba", "si la ba", true, 3))
+                    rgdao.insert(ReglaGeneral("prueba", "prue ba", false, 2))
+                    rgdao.insert(ReglaGeneral("sílaba", "si la ba", true, 3))
+                    rgdao.insert(ReglaGeneral("prueba", "prue ba", false, 2))
+                    rgdao.insert(ReglaGeneral("sílaba", "si la ba", true, 3))
                 }
             }
         }
