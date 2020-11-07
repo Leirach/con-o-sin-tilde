@@ -86,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="Sí"
+            android:text="@string/yes"
             android:layout_weight="1" />
         <Button
             android:onClick="checkAnswer"
@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="No"
+            android:text="@string/no"
             android:layout_weight="1" />
     </LinearLayout>
 

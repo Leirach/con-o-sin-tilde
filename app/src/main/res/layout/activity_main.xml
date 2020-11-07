@@ -11,90 +11,115 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="30sp"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
+        app:layout_constraintVertical_bias="0.080" />
 
     <ImageView
         android:id="@+id/logoTema"
-        android:layout_width="174dp"
-        android:layout_height="85dp"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.267"
-        app:srcCompat="@drawable/sega_logo" />
+        app:srcCompat="@drawable/sega_logo"
+        android:contentDescription="@string/imagen" />
 
-    <Button
-        android:id="@+id/leaderboards"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Leaderboards"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/animation_explained"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/animation_explained"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Animation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_explained"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/leaderboards" />
-
-    <Button
-        android:id="@+id/text_explained"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/animation_explained" />
-
-    <Button
-        android:id="@+id/left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:text="left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/right"
-        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525" />
+        <ImageButton
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
+            android:id="@+id/left"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/chevron_left_24px"
+            android:contentDescription="@string/izquierda" />
+
+        <TextView
+            android:id="@+id/game_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/regla_general"
+            android:textSize="24sp" />
+
+        <ImageButton
+            android:id="@+id/right"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/chevron_right_24px"
+            android:contentDescription="@string/derecha" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empezar Leccion"
+        android:layout_marginTop="5dp"
+        android:text="@string/comenzar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525" />
+        app:layout_constraintVertical_bias="0.95">
+
+        <ImageButton
+            android:id="@+id/leaderboards"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/format_list_bulleted_24px"
+            android:contentDescription="@string/mejores_punt" />
+
+        <ImageButton
+            android:id="@+id/animation_explained"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/ondemand_video_24px" />
+
+        <ImageButton
+            android:id="@+id/text_explained"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/description_24px" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

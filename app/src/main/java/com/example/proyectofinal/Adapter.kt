@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proyectofinal.db.LeaderboardItem
 
 
-class Adapter(private val context: Context, private val leaderboard_items: List<leaderboard_item>) :
+class Adapter(private val context: Context, private val leaderboard_items: List<LeaderboardItem>) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,7 +27,7 @@ class Adapter(private val context: Context, private val leaderboard_items: List<
 
     override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
         val  item = leaderboard_items[position]
-        holder.lugar.text = item.lugar.toString()
+        holder.lugar.text = "PLACEHOLDER"
         holder.fecha.text = item.fecha.toString()
         holder.aciertos.text = item.aciertos.toString()
         holder.tiempo.text = item.tiempo.toString()

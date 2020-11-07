@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
+import kotlin.math.max
+import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +23,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     lateinit var boton_juego: Button
-    lateinit var boton_izq: Button
-    lateinit var boton_der: Button
-    lateinit var boton_leaderboard: Button
-    lateinit var boton_anima: Button
-    lateinit var boton_texto: Button
+    lateinit var boton_izq: ImageButton
+    lateinit var boton_der: ImageButton
+    lateinit var title: TextView
+    lateinit var boton_leaderboard: ImageButton
+    lateinit var boton_animation: ImageButton
+    lateinit var boton_texto: ImageButton
     lateinit var image: ImageView
 
 
@@ -30,10 +36,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         boton_juego = findViewById<Button>(R.id.button6)
-        boton_izq = findViewById<Button>(R.id.left)
-        boton_der = findViewById<Button>(R.id.right)
-        boton_leaderboard = findViewById<Button>(R.id.leaderboards)
+        boton_izq = findViewById(R.id.left)
+        boton_der = findViewById(R.id.right)
+        boton_leaderboard = findViewById(R.id.leaderboards)
         image = findViewById(R.id.logoTema)
+        title = findViewById(R.id.game_name)
 
         // ==== PRUEBA DB ====
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
@@ -47,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         val arregloJuegos = arrayOf<Int>(R.id.sega, R.id.contexto, R.id.hiato)
         val images = arrayOf(R.drawable.sega_logo, R.drawable.ejercito_mexicano, R.drawable.watermelon)
+        val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
         var index: Int = 0;
 
 
@@ -62,19 +70,15 @@ class MainActivity : AppCompatActivity() {
 
         boton_izq.setOnClickListener(View.OnClickListener {view ->
             if (index == 0) {
-                index = 2
+                index = 2 // max games
             } else {
                 index--
             }
 
-
-            if (index == 0) {
-                image.setImageResource(R.drawable.sega_logo);
-            } else if (index == 1) {
-                image.setImageResource(R.drawable.ejercito_mexicano);
-            } else if (index == 2) {
-                image.setImageResource(R.drawable.watermelon);
-            }
+            title.text = getString(gameTitles[index])
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left)
+            title.startAnimation(animation)
+            image.setImageResource(images[index])
         })
 
         boton_der.setOnClickListener(View.OnClickListener { view ->
@@ -84,19 +88,20 @@ class MainActivity : AppCompatActivity() {
                 index++
             }
 
+            title.text = getString(gameTitles[index])
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right)
+            title.startAnimation(animation)
             image.setImageResource(images[index])
         })
 
-        boton_leaderboard.setOnClickListener({view  ->
+        boton_leaderboard.setOnClickListener { view ->
             Log.d("TAG", "Hallo Leaderboard")
             val intent = Intent(this, Leaderboard::class.java).apply {
                 putExtra("com.example.extra.LEADERBOARD", "String")
             }
             startActivity(intent)
             // startActivityForResult(intent, TEXT_REQUEST)
-        })
-
-
+        }
 
 
     }

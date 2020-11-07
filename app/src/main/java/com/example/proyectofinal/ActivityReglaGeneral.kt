@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
@@ -18,16 +19,19 @@ import com.example.proyectofinal.db.ReglaGeneral
 import kotlinx.android.synthetic.main.activity_regla_general.*
 
 class ActivityReglaGeneral : AppCompatActivity() {
+    // views
     lateinit var wordContainer: LinearLayout
-    var selected = -1
+    lateinit var stopwatch: Chronometer
+    lateinit var tildePrompt: Group
 
+    var selected = -1
     var word = listOf<String>("si", "la", "ba") // syllables
     var viewIds = arrayOf<Int>()                // ids of corresponding syllables in layout
 
     lateinit var wordList: List<ReglaGeneral> // word list
     var curIndex = 0
-    lateinit var stopwatch: Chronometer
-    lateinit var tildePrompt: Group
+
+    var aciertos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +93,8 @@ class ActivityReglaGeneral : AppCompatActivity() {
     }
 
     private fun gameEnd() {
+        val dialog = GameEndDialog()
+        dialog.show(supportFragmentManager, "NoticeDialogFragment")
         Toast.makeText(this, "TERMINÓ EL JUEGO", Toast.LENGTH_SHORT).show()
     }
 
@@ -98,12 +104,8 @@ class ActivityReglaGeneral : AppCompatActivity() {
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
 
-        Log.d("TAG", selected.toString())
-        Log.d("TAG", pos.toString())
-        Log.d("TAG", tilde.toString())
-        Log.d("TAG", curWord.tilde.toString())
-
         if (selected == pos && tilde == curWord.tilde) {
+            aciertos++
             Toast.makeText(this, "CORRECTO", Toast.LENGTH_SHORT).show()
         }
         else {

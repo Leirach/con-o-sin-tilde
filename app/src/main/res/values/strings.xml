@@ -1,10 +1,21 @@
 <resources>
-    <string name="app_name">¿Con o Sin Tilde?</string>
+    <string name="app_name">¿Con o sin tilde?</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="fragment_animacion">Este es el fragment de animacion</string>
     <string name="title_activity_juegos">Tema</string>
     <string name="sega">Sega</string>
     <string name="contexto">Contexto</string>
-    <string name="hiato">Hiato</string>
+    <string name="hiato">Hiatos y diptongos</string>
+    <string name="dialog_result_good">¡Buen trabajo!</string>
+    <string name="aciertos">Aciertos: %1$d de %2$d</string>
+    <string name="dialog_tiempo">Tiempo: %1$s</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="regla_general">Regla general</string>
+    <string name="comenzar">Comenzar</string>
+    <string name="izquierda">Izquierda</string>
+    <string name="derecha">Derecha</string>
+    <string name="imagen">Imagen del tema</string>
+    <string name="mejores_punt">Mejores puntuaciones</string>
 </resources>
