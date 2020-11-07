@@ -18,7 +18,7 @@
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/aciertos"/>
+        android:text="@string/dialog_aciertos"/>
     <TextView
         android:id="@+id/dialog_tiempo"
         android:textSize="18sp"
