@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CreditosActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".Leaderboard"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -28,10 +31,6 @@
         <activity
             android:name=".ActivityReglaGeneral"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ActivityJuegos"
-            android:label="@string/title_activity_juegos"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var boton_juego: Button
     lateinit var boton_izq: ImageButton
     lateinit var boton_der: ImageButton
+    lateinit var boton_info: ImageButton
     lateinit var title: TextView
     lateinit var boton_leaderboard: ImageButton
     lateinit var boton_animation: ImageButton
@@ -35,12 +36,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        boton_juego = findViewById<Button>(R.id.button6)
+        boton_juego = findViewById(R.id.button6)
         boton_izq = findViewById(R.id.left)
         boton_der = findViewById(R.id.right)
         boton_leaderboard = findViewById(R.id.leaderboards)
         image = findViewById(R.id.logoTema)
         title = findViewById(R.id.game_name)
+        boton_info = findViewById(R.id.btn_info)
 
         // ==== PRUEBA DB ====
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
@@ -103,6 +105,10 @@ class MainActivity : AppCompatActivity() {
             // startActivityForResult(intent, TEXT_REQUEST)
         }
 
+        boton_info.setOnClickListener {
+            val intent = Intent(this, CreditosActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
