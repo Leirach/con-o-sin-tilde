@@ -32,6 +32,11 @@ class AcentosViewModel(application: Application) : AndroidViewModel(application)
         randomReglaGeneral = repo.randomReglaGeneral
     }
 
+    fun leaderboardInsert(leaderboardItem: LeaderboardItem): Job = viewModelScope.launch(Dispatchers.IO) {
+        repo.insertScore(leaderboardItem)
+        repo.deleteLowest(leaderboardItem.juego) // VA AQUI?
+    }
+
     fun nukeTable() = viewModelScope.launch(Dispatchers.IO) {
         repo.nukeTables()
     }

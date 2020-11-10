@@ -3,6 +3,7 @@ package com.example.proyectofinal
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
+import com.example.proyectofinal.db.LeaderboardItem
 import com.example.proyectofinal.db.ReglaGeneral
 import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlin.time.seconds
@@ -22,7 +24,7 @@ import kotlin.time.seconds
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     //constants
     val SIZE_LARGE = 50f
-    val SIZE_SMALL = 25f
+    val SIZE_SMALL = 30f
     // views
     lateinit var wordContainer: LinearLayout
     lateinit var stopwatch: Chronometer
@@ -77,7 +79,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
 
         //reusable parameters for inserting view
 
-        wordSize = if (word.size >= 5) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
+        wordSize = if (wordList[curIndex].word.length >= 9) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
         val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
         word.forEachIndexed { idx, elem ->    // forEach syllable
             val syllable = TextView(this)
@@ -85,6 +87,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
             syllable.gravity = Gravity.CENTER
             syllable.text = elem
             syllable.id = View.generateViewId()
+            syllable.isSingleLine = true
             viewIds += syllable.id
             syllable.setOnClickListener {
                 updateSelected(idx)
@@ -96,12 +99,14 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
 
     private fun gameEnd() {
         stopwatch.stop()
-        val elapsedTime = ((SystemClock.elapsedRealtime() - stopwatch.base) * 1000).toInt()
+        val elapsedTime = ((SystemClock.elapsedRealtime() - stopwatch.base) / 1000).toInt() //elapse time as seconds
         val dialog = GameEndDialog()
         dialog.isCancelable = false
         val bundle = Bundle()
         bundle.putCharSequence("TIEMPO", stopwatch.text)
         bundle.putInt("ACIERTOS", aciertos)
+        val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
+        dbViewModel.leaderboardInsert(LeaderboardItem(0, System.currentTimeMillis(), aciertos, elapsedTime))
         dialog.arguments = bundle
         dialog.show(supportFragmentManager, "DialogEndGame")
     }

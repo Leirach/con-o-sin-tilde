@@ -18,8 +18,8 @@ interface LeaderboardDao {
     suspend fun insert(score: LeaderboardItem)
 
     //@Query("DELETE FROM leaderboard ORDER BY score LIMIT 1")
-    @Query("DELETE FROM leaderboard WHERE id IN (SELECT id FROM leaderboard ORDER BY score LIMIT 1)")
-    suspend fun delete() //TODO
+    @Query("DELETE FROM leaderboard WHERE id IN (SELECT id FROM leaderboard WHERE juego = :juegoId ORDER BY score LIMIT 1)")
+    suspend fun delete(juegoId: Int) //TODO
 
     @Query("DELETE FROM leaderboard")
     suspend fun nukeTable()

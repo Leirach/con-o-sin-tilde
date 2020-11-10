@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("TAG", "WHAT THE ACTUAL FUCK")
         boton_juego = findViewById(R.id.button6)
         boton_izq = findViewById(R.id.left)
         boton_der = findViewById(R.id.right)

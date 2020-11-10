@@ -14,6 +14,11 @@ class AcentosRepo(private val rgDao: ReglaGeneralDao, private val leaderboardDao
 
     suspend fun insertScore(leaderboardItem: LeaderboardItem) {
         leaderboardDao.insert(leaderboardItem)
+        // leaderboardDao.delete(leaderboardItem.juego) // O VA AQUI?
+    }
+
+    suspend fun deleteLowest(juego: Int) {
+        leaderboardDao.delete(juego)
     }
 
     suspend fun nukeTables() {
