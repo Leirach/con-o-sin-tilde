@@ -12,15 +12,20 @@ import kotlinx.coroutines.launch
 class AcentosViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: AcentosRepo
     val words: LiveData<List<ReglaGeneral>>
+    val countReglaGeneral: LiveData<Int>
+    var randomReglaGeneral: LiveData<List<ReglaGeneral>>
 
     init {
         val wordsDao = AcentosDatabase.getDatabase(application, viewModelScope).reglaGeneralDao()
         repo = AcentosRepo(wordsDao)
         words = repo.allWords
+        countReglaGeneral = repo.wordCount
+        randomReglaGeneral = repo.randomReglaGeneral
     }
 
-    fun getRandom(): Job = viewModelScope.launch(Dispatchers.IO) {
-        repo.getRandom()
+    fun getRandomReglaGeneral(): Job = viewModelScope.launch(Dispatchers.IO) {
+        repo.getRandomReglaGeneral()
+        randomReglaGeneral = repo.randomReglaGeneral
     }
 
     fun nukeTable() = viewModelScope.launch(Dispatchers.IO) {

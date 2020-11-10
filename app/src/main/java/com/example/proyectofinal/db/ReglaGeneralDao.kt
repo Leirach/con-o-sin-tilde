@@ -1,6 +1,7 @@
 package com.example.proyectofinal.db
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 @Dao
@@ -8,8 +9,11 @@ interface ReglaGeneralDao {
     @Query("SELECT * FROM regla_general")
     fun getWords(): LiveData<List<ReglaGeneral>>
 
-    @Query("SELECT * FROM regla_general ORDER BY RANDOM() LIMIT 1")
-    fun getRandom(): List<ReglaGeneral>
+    @Query("SELECT COUNT(id) FROM regla_general")
+    fun getCount(): LiveData<Int>
+
+    @Query("SELECT * FROM regla_general ORDER BY RANDOM() LIMIT 10")
+    fun getRandomReglaGeneral(): LiveData<List<ReglaGeneral>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(word: ReglaGeneral)

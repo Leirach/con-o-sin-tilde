@@ -2,6 +2,8 @@ package com.example.proyectofinal
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.Chronometer
@@ -9,12 +11,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
 import com.example.proyectofinal.db.ReglaGeneral
 import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlin.time.seconds
+
+const val SIZE_LARGE = 50f
+const val SIZE_SMALL = 25f
 
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     // views
@@ -30,6 +36,8 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     lateinit var wordList: List<ReglaGeneral> // word list
     var curIndex = 0
     var aciertos = 0
+
+    private var wordSize = SIZE_LARGE // current word size
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +58,8 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(
             AcentosViewModel::class.java
         )
-        dbViewModel.words.observe(this, Observer { words ->
+        dbViewModel.getRandomReglaGeneral()
+        dbViewModel.randomReglaGeneral.observe(this, Observer { words ->
             wordList = words // get words from db
             setWord()
             stopwatch.start()
@@ -67,10 +76,12 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         wordContainer.removeAllViews() //clear linear layout
 
         //reusable parameters for inserting view
-        val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0F)
+
+        wordSize = if (word.size >= 5) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
+        val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
         word.forEachIndexed { idx, elem ->    // forEach syllable
             val syllable = TextView(this)
-            syllable.textSize = 50f
+            syllable.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)
             syllable.gravity = Gravity.CENTER
             syllable.text = elem
             syllable.id = View.generateViewId()
@@ -114,12 +125,17 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         // if previously selected, get previous and reduce text size
         if (selected != -1) {
             val prev: TextView = findViewById(viewIds[selected])
-            prev.textSize = 50f
+            prev.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)
+            prev.setTextColor(ContextCompat.getColor(this, R.color.default_text_color)) // change color
+            val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
+            prev.layoutParams = param
         }
 
-        val selectedView: TextView =
-            findViewById(viewIds[idx]) // get currently selected view from array
-        selectedView.textSize = 70f
+        val selectedView: TextView = findViewById(viewIds[idx]) // get currently selected view from array
+        selectedView.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize+20) //increase text size
+        selectedView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary)) // change color
+        val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.7f) //increase container size
+        selectedView.layoutParams = param
         selected = idx
 
         tildePrompt.visibility = View.VISIBLE //make tilde prompt visible
