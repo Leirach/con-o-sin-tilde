@@ -1,13 +1,10 @@
 package com.example.proyectofinal
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TaskStackBuilder
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -45,7 +42,7 @@ class GameEndDialog: DialogFragment() {
 
             val btnLeaderboard: ImageButton = view.findViewById(R.id.dialog_leaderboards)
             btnLeaderboard.setOnClickListener{
-                val intent = Intent(activity, Leaderboard::class.java)
+                val intent = Intent(activity, LeaderboardActivity::class.java)
                 TaskStackBuilder.create(activity)
                     .addNextIntentWithParentStack(intent)
                     .startActivities()

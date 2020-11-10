@@ -13,8 +13,6 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
-import kotlin.math.max
-import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d("TAG", "WHAT THE ACTUAL FUCK")
         boton_juego = findViewById(R.id.button6)
         boton_izq = findViewById(R.id.left)
         boton_der = findViewById(R.id.right)
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         })
         // ==== PRUEBA DB ====
 
-        val arregloJuegos = arrayOf<Int>(R.id.sega, R.id.contexto, R.id.hiato)
+        val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
         val images = arrayOf(R.drawable.sega_logo, R.drawable.ejercito_mexicano, R.drawable.watermelon)
         val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
         var index: Int = 0;
@@ -98,11 +97,12 @@ class MainActivity : AppCompatActivity() {
 
         boton_leaderboard.setOnClickListener { view ->
             Log.d("TAG", "Hallo Leaderboard")
-            val intent = Intent(this, Leaderboard::class.java).apply {
-                putExtra("com.example.extra.LEADERBOARD", "String")
+            val intent = Intent(this, LeaderboardActivity::class.java).apply {
+                putExtra("com.example.extra.LEADERBOARD", index)
             }
             startActivity(intent)
             // startActivityForResult(intent, TEXT_REQUEST)
+
         }
 
         boton_info.setOnClickListener {
@@ -111,11 +111,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-
-
-
 
 
 }

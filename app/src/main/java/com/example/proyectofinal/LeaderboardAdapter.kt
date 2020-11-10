@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectofinal.db.LeaderboardItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class Adapter(private val context: Context, private val leaderboard_items: List<LeaderboardItem>) :
-    RecyclerView.Adapter<Adapter.ViewHolder>() {
+class LeaderboardAdapter(private val context: Context, val leaderboardItems: List<LeaderboardItem>) :
+    RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() {
+
+    val dateFormat = SimpleDateFormat.getDateInstance()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val lugar: TextView = itemView.findViewById(R.id.Lugar)
@@ -25,17 +29,17 @@ class Adapter(private val context: Context, private val leaderboard_items: List<
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
-        val  item = leaderboard_items[position]
-        holder.lugar.text = "PLACEHOLDER"
-        holder.fecha.text = item.fecha.toString()
-        holder.aciertos.text = item.aciertos.toString()
-        holder.tiempo.text = item.tiempo.toString()
+    override fun onBindViewHolder(holder: LeaderboardAdapter.ViewHolder, position: Int) {
+        val  item = leaderboardItems[position]
+        holder.lugar.text = (position+1).toString()
+        holder.fecha.text = dateFormat.format((item.fecha)).toString()
+        holder.aciertos.text = "${item.aciertos}/10"
+        val minutes = item.tiempo / 60
+        val seconds = item.tiempo % 60
+        holder.tiempo.text = String.format("%02d:%02d", minutes, seconds)
         holder.score.text = item.score.toString()
     }
 
-    override fun getItemCount(): Int = leaderboard_items.size
-
-
+    override fun getItemCount(): Int = leaderboardItems.size
 
 }

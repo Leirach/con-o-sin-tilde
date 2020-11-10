@@ -15,12 +15,16 @@ class AcentosViewModel(application: Application) : AndroidViewModel(application)
     val countReglaGeneral: LiveData<Int>
     var randomReglaGeneral: LiveData<List<ReglaGeneral>>
 
+    var leaderboard: LiveData<List<LeaderboardItem>>
+
     init {
         val wordsDao = AcentosDatabase.getDatabase(application, viewModelScope).reglaGeneralDao()
-        repo = AcentosRepo(wordsDao)
+        val leaderboardDao = AcentosDatabase.getDatabase(application, viewModelScope).leaderboardDao()
+        repo = AcentosRepo(wordsDao, leaderboardDao)
         words = repo.allWords
         countReglaGeneral = repo.wordCount
         randomReglaGeneral = repo.randomReglaGeneral
+        leaderboard = repo.leaderboard
     }
 
     fun getRandomReglaGeneral(): Job = viewModelScope.launch(Dispatchers.IO) {
@@ -29,6 +33,6 @@ class AcentosViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun nukeTable() = viewModelScope.launch(Dispatchers.IO) {
-        repo.nukeTable()
+        repo.nukeTables()
     }
 }

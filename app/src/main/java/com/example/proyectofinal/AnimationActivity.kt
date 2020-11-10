@@ -15,7 +15,7 @@ class AnimationActivity : AppCompatActivity() {
 
         btnContinue.setOnClickListener {
             when (number) {
-                R.id.sega -> {
+                R.id.regla_general -> {
                     val intent = Intent(this, ActivityReglaGeneral::class.java)
                     startActivity(intent)
                 }

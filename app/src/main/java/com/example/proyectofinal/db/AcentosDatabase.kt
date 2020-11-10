@@ -1,18 +1,22 @@
 package com.example.proyectofinal.db
 
 import android.content.Context
+import android.content.res.AssetManager
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.io.InputStream
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [ReglaGeneral::class], version = 1, exportSchema = false)
+@Database(entities = [ReglaGeneral::class, LeaderboardItem::class], version = 1, exportSchema = true)
 abstract class AcentosDatabase : RoomDatabase() {
 
     abstract fun reglaGeneralDao(): ReglaGeneralDao
+    abstract fun leaderboardDao(): LeaderboardDao
 
     private class initCallback(
         private val scope: CoroutineScope
@@ -22,7 +26,8 @@ abstract class AcentosDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    var rgdao = database.reglaGeneralDao()
+                    val rgdao = database.reglaGeneralDao()
+                    val leaderboardDao = database.leaderboardDao()
                     // insert initial data
                     rgdao.nukeTable()
                     rgdao.insert(ReglaGeneral("paralelo", "pa ra le lo", false, 2))
@@ -36,6 +41,12 @@ abstract class AcentosDatabase : RoomDatabase() {
                     rgdao.insert(ReglaGeneral("empezó","em pe zo",true,	1))
                     rgdao.insert(ReglaGeneral("así", "a si", true, 1))
                     rgdao.insert(ReglaGeneral("Japón", "Ja pon",true,1))
+
+                    //leaderboardDao.nukeTable()
+//                    for (i in 0..29) {
+//                        leaderboardDao.insert(LeaderboardItem(i/10, System.currentTimeMillis(), i/10, 600))
+//                    }
+
                 }
             }
         }
@@ -55,7 +66,7 @@ abstract class AcentosDatabase : RoomDatabase() {
                     context.applicationContext,
                     AcentosDatabase::class.java,
                     "acentosdb"
-                ).addCallback(initCallback(scope)).build()
+                ).createFromAsset("database/acentos.db").addCallback(initCallback(scope)).build()
                 INSTANCE = instance
                 // return instance
                 instance

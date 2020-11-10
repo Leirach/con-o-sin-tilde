@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "leaderboard")
 class LeaderboardItem(
     @PrimaryKey(autoGenerate = true) var id: Int,
-    var fecha: Int,
+    var juego: Int,
+    var fecha: Long,
     var aciertos: Int,
     var tiempo: Int,
     var score: Int) {
-    constructor(fecha: Int, aciertos: Int, tiempo: Int): this(0, fecha, aciertos, tiempo, aciertos*1000/tiempo)
+    constructor(juego: Int, fecha: Long, aciertos: Int, tiempo: Int): this(0, juego, fecha, aciertos, tiempo, aciertos*1000/tiempo)
 
 }

@@ -27,31 +27,4 @@
         android:layout_height="wrap_content"
         android:text="Continuar" />
 
-    <!--  Estos no se usan pero estoy usando los ids para rutear los juegos  -->
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/sega"
-        android:name="com.example.proyectofinal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        />
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/hiato"
-        android:name="com.example.proyectofinal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" />
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/contexto"
-        android:name="com.example.proyectofinal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        />
-
 </LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  IDS PARA IDENTIFICAR LOS DIFERENTES JUEGOS EN LA LOGICA DE LA APP  -->
+    <item type="id" name="regla_general" />
+    <item type="id" name="hiato" />
+    <item type="id" name="contexto" />
+</resources>

@@ -19,10 +19,10 @@ import com.example.proyectofinal.db.ReglaGeneral
 import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlin.time.seconds
 
-const val SIZE_LARGE = 50f
-const val SIZE_SMALL = 25f
-
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
+    //constants
+    val SIZE_LARGE = 50f
+    val SIZE_SMALL = 25f
     // views
     lateinit var wordContainer: LinearLayout
     lateinit var stopwatch: Chronometer

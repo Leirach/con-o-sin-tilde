@@ -13,7 +13,7 @@
             android:name=".CreditosActivity"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".Leaderboard"
+            android:name=".LeaderboardActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

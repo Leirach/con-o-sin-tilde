@@ -5,22 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".LeaderboardActivity">
 
     <TextView
-        android:id="@+id/Leaderboards_Title"
+        android:id="@+id/leaderboards_title"
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Leaderboards"
+        android:text="@string/leaderboards_title"
+        android:paddingVertical="8dp"
         />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
+            android:id="@+id/left"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/chevron_left_24px"
+            android:contentDescription="@string/izquierda"
+            android:onClick="buttonClicked"/>
+
+        <TextView
+            android:id="@+id/game_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/regla_general"
+            android:textSize="24sp" />
+
+        <ImageButton
+            android:id="@+id/right"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/chevron_right_24px"
+            android:contentDescription="@string/derecha"
+            android:onClick="buttonClicked"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue"
         >
     </androidx.recyclerview.widget.RecyclerView>
 
