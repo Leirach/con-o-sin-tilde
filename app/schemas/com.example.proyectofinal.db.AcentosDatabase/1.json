@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fd54207694eee36b2fd87df2b82874fb",
+    "identityHash": "6d26c2cee77425a5ba1143a568818341",
     "entities": [
       {
         "tableName": "regla_general",
@@ -24,6 +24,112 @@
             "fieldPath": "syllable",
             "columnName": "syllable",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tilde",
+            "columnName": "tilde",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pos",
+            "columnName": "pos",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "context",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `word` TEXT NOT NULL, `opt1` TEXT NOT NULL, `opt2` TEXT NOT NULL, `opt3` TEXT NOT NULL, `correct` INTEGER NOT NULL, `sentence` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "opt1",
+            "columnName": "opt1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "opt2",
+            "columnName": "opt2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "opt3",
+            "columnName": "opt3",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correct",
+            "columnName": "correct",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sentence",
+            "columnName": "sentence",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "hiatos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `word` TEXT NOT NULL, `syllable` TEXT NOT NULL, `syllableCount` INTEGER NOT NULL, `tilde` INTEGER NOT NULL, `pos` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syllable",
+            "columnName": "syllable",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syllableCount",
+            "columnName": "syllableCount",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -102,7 +208,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fd54207694eee36b2fd87df2b82874fb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6d26c2cee77425a5ba1143a568818341')"
     ]
   }
 }

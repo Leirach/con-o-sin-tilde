@@ -11,15 +11,12 @@ interface LeaderboardDao {
     @Query("SELECT COUNT(id) FROM leaderboard")
     fun getCount(): LiveData<Int>
 
-    @Query("SELECT COUNT(id) FROM leaderboard")
-    fun getCountSync(): Int
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(score: LeaderboardItem)
 
     //@Query("DELETE FROM leaderboard ORDER BY score LIMIT 1")
     @Query("DELETE FROM leaderboard WHERE id IN (SELECT id FROM leaderboard WHERE juego = :juegoId ORDER BY score LIMIT 1)")
-    suspend fun delete(juegoId: Int) //TODO
+    suspend fun delete(juegoId: Int)
 
     @Query("DELETE FROM leaderboard")
     suspend fun nukeTable()

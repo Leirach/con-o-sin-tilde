@@ -61,7 +61,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
             AcentosViewModel::class.java
         )
         dbViewModel.getRandomReglaGeneral()
-        dbViewModel.randomReglaGeneral.observe(this, Observer { words ->
+        dbViewModel.rgRandom.observe(this, Observer { words ->
             wordList = words // get words from db
             setWord()
             stopwatch.start()
