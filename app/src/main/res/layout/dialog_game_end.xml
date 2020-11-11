@@ -13,6 +13,16 @@
         android:text="@string/dialog_result_good"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dialog_pts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_pts"
+        android:textSize="32sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/dialog_aciertos"
         android:textSize="18sp"

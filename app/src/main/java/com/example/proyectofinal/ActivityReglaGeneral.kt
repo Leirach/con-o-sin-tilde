@@ -103,10 +103,15 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         val dialog = GameEndDialog()
         dialog.isCancelable = false
         val bundle = Bundle()
-        bundle.putCharSequence("TIEMPO", stopwatch.text)
+        bundle.putCharSequence("TIEMPO", stopwatch.text) // time as string
+        bundle.putInt("ELAPSEDTIME", elapsedTime)   // time as int
         bundle.putInt("ACIERTOS", aciertos)
+
+        //store best score in databse
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
         dbViewModel.leaderboardInsert(LeaderboardItem(0, System.currentTimeMillis(), aciertos, elapsedTime))
+
+        //start dialog with bundled data
         dialog.arguments = bundle
         dialog.show(supportFragmentManager, "DialogEndGame")
     }
