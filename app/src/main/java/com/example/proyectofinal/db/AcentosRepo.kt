@@ -1,20 +1,29 @@
 package com.example.proyectofinal.db
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 
-class AcentosRepo(private val rgDao: ReglaGeneralDao, private val leaderboardDao: LeaderboardDao) {
+class AcentosRepo(private val rgDao: ReglaGeneralDao, private val contextDao: ContextoDao,
+                  private val hiatoDao: HiatoDao, private val leaderboardDao: LeaderboardDao) {
     // regla general
-    val allWords: LiveData<List<ReglaGeneral>> = rgDao.getWords()
-    val wordCount: LiveData<Int> = rgDao.getCount()
-    var randomReglaGeneral: LiveData<List<ReglaGeneral>> = rgDao.getRandomReglaGeneral()
+    val rgCount: LiveData<Int> = rgDao.getCount()
+    var rgRandom: LiveData<List<ReglaGeneral>> = rgDao.getRandomSync()
+
+    // contexto
+    var contextCount: LiveData<Int> = contextDao.getCount()
+    var contextRandom: LiveData<List<Contexto>> = contextDao.getRandomSync()
+
+    // hiatos
+    var hiatoCount: LiveData<Int> = hiatoDao.getCount()
+    var hiatoRandom: LiveData<List<Hiato>> = hiatoDao.getRandomSync()
 
     //leaderboards
     var leaderboard: LiveData<List<LeaderboardItem>> = leaderboardDao.getAll()
 
 
+    // funciones para leaderboard
     suspend fun insertScore(leaderboardItem: LeaderboardItem) {
         leaderboardDao.insert(leaderboardItem)
-        // leaderboardDao.delete(leaderboardItem.juego) // O VA AQUI?
     }
 
     suspend fun deleteLowest(juego: Int) {
@@ -27,7 +36,18 @@ class AcentosRepo(private val rgDao: ReglaGeneralDao, private val leaderboardDao
     }
 
     // actualizar livedata con valores random
+    // regla general
     suspend fun getRandomReglaGeneral() {
-        randomReglaGeneral = rgDao.getRandomReglaGeneral()
+        rgRandom = rgDao.getRandomSync()
+    }
+
+    // contexto
+    suspend fun getRandomContexto() {
+        contextRandom = contextDao.getRandomSync()
+    }
+
+    // hiatos
+    suspend fun getRandomHiato() {
+        hiatoRandom = hiatoDao.getRandomSync()
     }
 }

@@ -13,7 +13,10 @@ interface ReglaGeneralDao {
     fun getCount(): LiveData<Int>
 
     @Query("SELECT * FROM regla_general ORDER BY RANDOM() LIMIT 10")
-    fun getRandomReglaGeneral(): LiveData<List<ReglaGeneral>>
+    fun getRandomSync(): LiveData<List<ReglaGeneral>>
+
+    @Query("SELECT * FROM regla_general ORDER BY RANDOM() LIMIT 10")
+    suspend fun getRandom(): List<ReglaGeneral>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(word: ReglaGeneral)

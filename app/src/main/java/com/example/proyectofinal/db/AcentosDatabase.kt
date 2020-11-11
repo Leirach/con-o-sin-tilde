@@ -12,10 +12,12 @@ import kotlinx.coroutines.launch
 import java.io.InputStream
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [ReglaGeneral::class, LeaderboardItem::class], version = 1, exportSchema = true)
+@Database(entities = [ReglaGeneral::class, Contexto::class, Hiato::class, LeaderboardItem::class], version = 1, exportSchema = true)
 abstract class AcentosDatabase : RoomDatabase() {
 
     abstract fun reglaGeneralDao(): ReglaGeneralDao
+    abstract fun contextDao(): ContextoDao
+    abstract fun hiatoDao(): HiatoDao
     abstract fun leaderboardDao(): LeaderboardDao
 
     private class initCallback(

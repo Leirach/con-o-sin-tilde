@@ -11,30 +11,55 @@ import kotlinx.coroutines.launch
 
 class AcentosViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: AcentosRepo
-    val words: LiveData<List<ReglaGeneral>>
-    val countReglaGeneral: LiveData<Int>
-    var randomReglaGeneral: LiveData<List<ReglaGeneral>>
 
+    //regla general
+    val rgCount: LiveData<Int>
+    var rgRandom: LiveData<List<ReglaGeneral>>
+
+    //contexto
+    val contextCount: LiveData<Int>
+    var contextRandom: LiveData<List<Contexto>>
+
+    //contexto
+    val hiatoCount: LiveData<Int>
+    var hiatoRandom: LiveData<List<Hiato>>
+
+    // leaderboards
     var leaderboard: LiveData<List<LeaderboardItem>>
 
     init {
-        val wordsDao = AcentosDatabase.getDatabase(application, viewModelScope).reglaGeneralDao()
+        val rgDao = AcentosDatabase.getDatabase(application, viewModelScope).reglaGeneralDao()
+        val contextDao = AcentosDatabase.getDatabase(application, viewModelScope).contextDao()
+        val hiatoDao = AcentosDatabase.getDatabase(application, viewModelScope).hiatoDao()
         val leaderboardDao = AcentosDatabase.getDatabase(application, viewModelScope).leaderboardDao()
-        repo = AcentosRepo(wordsDao, leaderboardDao)
-        words = repo.allWords
-        countReglaGeneral = repo.wordCount
-        randomReglaGeneral = repo.randomReglaGeneral
+        repo = AcentosRepo(rgDao, contextDao, hiatoDao, leaderboardDao)
+        rgCount = repo.rgCount
+        rgRandom = repo.rgRandom
+        contextCount = repo.contextCount
+        contextRandom = repo.contextRandom
+        hiatoCount = repo.hiatoCount
+        hiatoRandom = repo.hiatoRandom
         leaderboard = repo.leaderboard
     }
 
     fun getRandomReglaGeneral(): Job = viewModelScope.launch(Dispatchers.IO) {
         repo.getRandomReglaGeneral()
-        randomReglaGeneral = repo.randomReglaGeneral
+        //rgRandom = repo.rgRandom
+    }
+
+    fun getRandomContexto(): Job = viewModelScope.launch(Dispatchers.IO) {
+        repo.getRandomContexto()
+        //contextRandom = repo.contextRandom
+    }
+
+    fun getRandomHiato(): Job = viewModelScope.launch(Dispatchers.IO) {
+        repo.getRandomHiato()
+        //hiatoRandom = repo.hiatoRandom
     }
 
     fun leaderboardInsert(leaderboardItem: LeaderboardItem): Job = viewModelScope.launch(Dispatchers.IO) {
         repo.insertScore(leaderboardItem)
-        repo.deleteLowest(leaderboardItem.juego) // VA AQUI?
+        repo.deleteLowest(leaderboardItem.juego)
     }
 
     fun nukeTable() = viewModelScope.launch(Dispatchers.IO) {

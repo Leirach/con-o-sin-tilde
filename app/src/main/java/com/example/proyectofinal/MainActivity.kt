@@ -43,13 +43,13 @@ class MainActivity : AppCompatActivity() {
         boton_info = findViewById(R.id.btn_info)
 
         // ==== PRUEBA DB ====
-        val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
-        dbViewModel.words.observe(this, Observer { words ->
-            val allwords = words.map { item ->
-                return@map item.word
-            }
-            Log.d("TAG", allwords.joinToString(", "))
-        })
+//        val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
+//        dbViewModel.rgRandom.observe(this, Observer { words ->
+//            val allwords = words.map { item ->
+//                return@map item.word
+//            }
+//            //Log.d("TAG", allwords.joinToString(", "))
+//        })
         // ==== PRUEBA DB ====
 
         val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
 
         boton_juego.setOnClickListener {
-            Log.d("TAG", "Hallo")
+            //Log.d("TAG", "Hallo")
             val juegoNumero = arregloJuegos[index]
             val intent = Intent(this, AnimationActivity::class.java).apply {
                 putExtra("com.example.extra.GAME_MODE", juegoNumero)
