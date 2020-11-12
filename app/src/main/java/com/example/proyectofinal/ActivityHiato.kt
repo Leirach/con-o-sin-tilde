@@ -121,6 +121,9 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     // set word in layout according to current index
     private fun setWord() {
+        tilde_flag = false;
+        seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
+        seleciona_letra_tilde.visibility = View.INVISIBLE
         word = wordList[curIndex].word.chunked(1) // get next word
 
         // reset
@@ -219,6 +222,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             ) //increase container size
             selectedView.layoutParams = param
             selected = idx
+            checkAnswerTilde()
         }
 
     }
@@ -272,14 +276,11 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     }
 
 
-
-    fun checkAnswer2(view: View) {
+    fun checkAnswerTilde() {
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
 
-        if (selected == pos && tilde == curWord.tilde) {
-
-
+        if (selected == pos) {
             aciertos++
             textViewAciertos.text = "$aciertos/10"
         }
