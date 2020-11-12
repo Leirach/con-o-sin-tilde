@@ -230,47 +230,29 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     // checks if the selected answer is correct
     fun checkAnswer(view: View) {
         contador = findViewById(R.id.counter)
-        val tilde = (view.id == R.id.btnYes)
+        val tilde = (view.id == R.id.btnYes) // true = user clicked yes, false = user clicked no
         val curWord = wordList[curIndex]
-        if (curWord.tilde == false) {
-            if (contador.text.toString().toInt() == curWord.syllableCount  && tilde == false ) {
+
+        if (!curWord.tilde) {
+            if (contador.text.toString().toInt() == curWord.syllableCount && !tilde) {
                 aciertos++
                 textViewAciertos.text = "$aciertos/10"
-
-                tildePrompt.visibility = View.GONE
-
-                curIndex++
-                if (curIndex >= 10) {
-                    gameEnd()
-                } else {
-                    setWord()
-                }
-            } else {
-                tildePrompt.visibility = View.GONE
-
-                curIndex++
-                if (curIndex >= 10) {
-                    gameEnd()
-                } else {
-                    setWord()
-                }
             }
         } else {
-            if (tilde != false) {
+            if (tilde) { // new question
                 tilde_flag = true;
                 seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
                 seleciona_letra_tilde.visibility = View.VISIBLE
-            } else {
-                tildePrompt.visibility = View.GONE
-
-                curIndex++
-                if (curIndex >= 10) {
-                    gameEnd()
-                } else {
-                    setWord()
-                }
+                return
             }
+        }
+        tildePrompt.visibility = View.GONE
 
+        curIndex++
+        if (curIndex >= 10) {
+            gameEnd()
+        } else {
+            setWord()
         }
 
     }

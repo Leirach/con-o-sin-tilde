@@ -65,6 +65,7 @@
             android:gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/chevron_left_24px"
+            android:tint="@color/colorAccent"
             android:contentDescription="@string/izquierda" />
 
         <TextView
@@ -87,6 +88,7 @@
             android:layout_marginHorizontal="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/chevron_right_24px"
+            android:tint="@color/colorAccent"
             android:contentDescription="@string/derecha" />
 
     </LinearLayout>
