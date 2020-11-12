@@ -6,6 +6,7 @@ import android.os.SystemClock
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.Chronometer
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,7 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
 import com.example.proyectofinal.db.LeaderboardItem
 import com.example.proyectofinal.db.ReglaGeneral
-import com.example.proyectofinal.db.ReglaHiato
+
+import com.example.proyectofinal.db.Hiato
 import kotlinx.android.synthetic.main.activity_regla_general.*
 
 class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
@@ -28,12 +30,18 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     lateinit var stopwatch: Chronometer
     lateinit var tildePrompt: Group
     lateinit var aciertosTextView: TextView
+    lateinit var boton_sumar: Button
+    lateinit var boton_restar: Button
+    lateinit var boton_enviar: Button
+    lateinit var contador: TextView
+    lateinit var seleciona_letra_tilde: TextView
+    var tilde_flag: Boolean = false
 
     var selected = -1
     var word = listOf<String>("San dia a") // syllables
     var viewIds = arrayOf<Int>()                // ids of corresponding syllables in layout
 
-    lateinit var wordList: MutableList<ReglaHiato> // word list
+    lateinit var wordList: MutableList<Hiato> // word list
 //    = mutableListOf<ReglaHiato>(ReglaHiato("Sandia", "San dia a", 3, true, 2))
 
     var curIndex = 0
@@ -43,7 +51,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_regla_general)
+        setContentView(R.layout.activity_hiato)
 
         // init views
         stopwatch = findViewById(R.id.chronometer)
@@ -51,6 +59,35 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         tildePrompt.visibility = View.GONE
         wordContainer = findViewById(R.id.wordContainer)
         aciertosTextView = findViewById(R.id.textViewAciertos)
+
+        boton_sumar = findViewById(R.id.sumar)
+        boton_restar = findViewById(R.id.restar)
+//        boton_enviar = findViewById(R.id.submit)
+        var variable: Int
+
+        seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
+        seleciona_letra_tilde.visibility = View.INVISIBLE
+
+        boton_sumar.setOnClickListener({
+            contador = findViewById(R.id.counter)
+            variable = contador.text.toString().toInt()
+            if (variable < 6) {
+                variable += 1
+                contador.setText((variable.toString()))
+                tildePrompt.visibility = View.VISIBLE
+            }
+        })
+
+        boton_restar.setOnClickListener({
+            contador = findViewById(R.id.counter)
+            variable = contador.text.toString().toInt()
+            if (variable > 0) {
+                variable -= 1
+                contador.setText((variable.toString()))
+                tildePrompt.visibility = View.VISIBLE
+            }
+        })
+
 
         startGame()
     }
@@ -66,19 +103,25 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 //            setWord()
 //            stopwatch.start()
 //        })
+        wordList = mutableListOf<Hiato>()
         wordList.clear()
-        wordList.add(ReglaHiato("Sandia", "San dia a", 3, true, 2))
-        wordList.add(ReglaHiato("Sandia", "San dia a", 3, true, 2))
-        wordList.add(ReglaHiato("Sandia", "San dia a", 3, true, 2))
-        wordList.add(ReglaHiato("Sandia", "San dia a", 3, true, 2))
-        wordList.add(ReglaHiato("Sandia", "San dia a", 3, true, 2))
+        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
+        wordList.add(Hiato("Adios", "A dios", 2, false, -1))
+        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
+        wordList.add(Hiato("Adios", "A dios", 3, false, 2))
+        wordList.add(Hiato("Cueva", "Cue va", 2, false, -1))
+        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
+        wordList.add(Hiato("Adios", "A dios", 2, false, -1))
+        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
+        wordList.add(Hiato("Adios", "A dios", 3, false, 2))
+        wordList.add(Hiato("Cueva", "Cue va", 2, false, -1))
         setWord()
         stopwatch.start()
     }
 
     // set word in layout according to current index
     private fun setWord() {
-        word = wordList[curIndex].syllable.split(' ') // get next word
+        word = wordList[curIndex].word.chunked(1) // get next word
 
         // reset
         selected = -1
@@ -87,7 +130,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
         //reusable parameters for inserting view
 
-        wordSize = if (wordList[curIndex].word.length >= 9) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
+        wordSize = if (wordList[curIndex].word.length >= 10) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
         val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
         word.forEachIndexed { idx, elem ->    // forEach syllable
             val syllable = TextView(this)
@@ -103,6 +146,8 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             //push view in linear layout
             wordContainer.addView(syllable, param)
         }
+
+
     }
 
     private fun gameEnd() {
@@ -142,31 +187,99 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     // updates selected syllable in view
     private fun updateSelected(idx: Int) {
         // if previously selected, get previous and reduce text size
-        if (selected != -1) {
-            val prev: TextView = findViewById(viewIds[selected])
-            prev.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)
-            prev.setTextColor(ContextCompat.getColor(this, R.color.default_text_color)) // change color
-            val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
-            prev.layoutParams = param
+        if (tilde_flag) {
+
+            if (selected != -1) {
+                val prev: TextView = findViewById(viewIds[selected])
+                prev.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)
+                prev.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.default_text_color
+                    )
+                ) // change color
+                val param =
+                    LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
+                prev.layoutParams = param
+            }
+
+            val selectedView: TextView =
+                findViewById(viewIds[idx]) // get currently selected view from array
+            selectedView.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize + 20) //increase text size
+            selectedView.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.colorPrimary
+                )
+            ) // change color
+            val param = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.7f
+            ) //increase container size
+            selectedView.layoutParams = param
+            selected = idx
         }
 
-        val selectedView: TextView = findViewById(viewIds[idx]) // get currently selected view from array
-        selectedView.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize+20) //increase text size
-        selectedView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary)) // change color
-        val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.7f) //increase container size
-        selectedView.layoutParams = param
-        selected = idx
-
-        tildePrompt.visibility = View.VISIBLE //make tilde prompt visible
     }
 
     // checks if the selected answer is correct
     fun checkAnswer(view: View) {
+        contador = findViewById(R.id.counter)
         val tilde = (view.id == R.id.btnYes)
+        val curWord = wordList[curIndex]
+        if (curWord.tilde == false) {
+            if (contador.text.toString().toInt() == curWord.syllableCount  && tilde == false ) {
+                aciertos++
+                textViewAciertos.text = "$aciertos/10"
+
+                tildePrompt.visibility = View.GONE
+
+                curIndex++
+                if (curIndex >= 10) {
+                    gameEnd()
+                } else {
+                    setWord()
+                }
+            } else {
+                tildePrompt.visibility = View.GONE
+
+                curIndex++
+                if (curIndex >= 10) {
+                    gameEnd()
+                } else {
+                    setWord()
+                }
+            }
+        } else {
+            if (tilde != false) {
+                tilde_flag = true;
+                seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
+                seleciona_letra_tilde.visibility = View.VISIBLE
+            } else {
+                tildePrompt.visibility = View.GONE
+
+                curIndex++
+                if (curIndex >= 10) {
+                    gameEnd()
+                } else {
+                    setWord()
+                }
+            }
+
+        }
+
+    }
+
+
+
+    fun checkAnswer2(view: View) {
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
 
         if (selected == pos && tilde == curWord.tilde) {
+
+
             aciertos++
             textViewAciertos.text = "$aciertos/10"
         }

@@ -7,6 +7,7 @@
     <string name="sega">Sega</string>
     <string name="contexto">Contexto</string>
     <string name="hiato">Hiatos y diptongos</string>
+    <string name="counter"> Con los botones de suma y resta seleciona la cantidad de silabas que tiene la palabra.</string>
     <string name="dialog_result_good">¡Buen trabajo!</string>
     <string name="dialog_result_bad">Puedes mejorar</string>
     <string name="dialog_aciertos">Aciertos: %1$d de %2$d</string>
