@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         // ==== PRUEBA DB ====
 
         val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
-        val images = arrayOf(R.drawable.sega_logo, R.drawable.ejercito_mexicano, R.drawable.watermelon)
+        val images = arrayOf(R.drawable.regla_general, R.drawable.contexto, R.drawable.watermelon)
         val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
         var index: Int = 0;
 
