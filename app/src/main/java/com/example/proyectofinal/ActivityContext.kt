@@ -82,6 +82,7 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 1, "Elija la opción 1"))
         wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 2, "Elija la opción 2"))
         wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 3, "Elija la opción 3"))
+        wordList.add(Contexto("opcion dum", "Opción 1", "Opción 2", "", 2, "Prueba para ocultar opciones"))
         wordList.add(Contexto("Como", "Comó", "Cómo", "Como", 3, "Yo _____ huevo en el desayuno"))
         wordList.add(Contexto("Porque", "Porque", "Porqué", "Por que", 2, "Lo digó ______ sí"))
         wordList.add(Contexto("Mas", "Más", "Mas", "Cualquiera de las dos", 1, "El juego cuesta 700 pesos ____ iva"))
@@ -103,8 +104,13 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         SentencePrompt.text = curWord.sentence
         bOpt1.text = curWord.opt1
         bOpt2.text = curWord.opt2
-        bOpt3.text = curWord.opt3
-
+        if(curWord.opt3.isEmpty()){
+            bOpt3.visibility = View.INVISIBLE
+        }
+        else {
+            bOpt3.visibility = View.VISIBLE
+            bOpt3.text = curWord.opt3
+        }
         bOpt1.setOnClickListener{
             checkAnswer(1)
         }
