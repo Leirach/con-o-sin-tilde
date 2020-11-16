@@ -1,5 +1,6 @@
 package com.example.proyectofinal
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.DisplayMetrics
@@ -19,6 +20,7 @@ import com.example.proyectofinal.db.AcentosViewModel
 import com.example.proyectofinal.db.LeaderboardItem
 import com.example.proyectofinal.db.ReglaGeneral
 import kotlinx.android.synthetic.main.activity_regla_general.*
+import java.io.InputStream
 import kotlin.time.seconds
 
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
@@ -41,6 +43,10 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
 
     private var wordSize = SIZE_LARGE // current word size
 
+    // audio feedback
+    lateinit var correctAudio: MediaPlayer
+    lateinit var wrongAudio: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_regla_general)
@@ -51,6 +57,9 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         tildePrompt.visibility = View.GONE
         wordContainer = findViewById(R.id.wordContainer)
         aciertosTextView = findViewById(R.id.textViewAciertos)
+
+        correctAudio = MediaPlayer.create(this, R.raw.correct)
+        wrongAudio = MediaPlayer.create(this, R.raw.wrong)
 
         startGame()
     }
@@ -158,8 +167,12 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         val pos = word.size - curWord.pos
 
         if (selected == pos && tilde == curWord.tilde) {
+            correctAudio.start()
             aciertos++
             textViewAciertos.text = "$aciertos/10"
+        }
+        else {
+            wrongAudio.start()
         }
 
         tildePrompt.visibility = View.GONE

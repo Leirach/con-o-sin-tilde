@@ -1,5 +1,6 @@
 package com.example.proyectofinal
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -42,6 +43,10 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
     var curIndex = 0
     var aciertos = 0
 
+    // audio feedback
+    lateinit var correctAudio: MediaPlayer
+    lateinit var wrongAudio: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_context)
@@ -54,6 +59,9 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         bOpt3 = findViewById(R.id.opt3)
 
         aciertosTextView = findViewById(R.id.textViewAciertos)
+
+        correctAudio = MediaPlayer.create(this, R.raw.correct)
+        wrongAudio = MediaPlayer.create(this, R.raw.wrong)
 
         startGame()
     }
@@ -142,20 +150,19 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         resetGame()
     }
 
-    // ===== Buttons/UI callbacks =====
-    // updates selected syllable in view
-
-    //view: View
     // checks if the selected answer is correct
     fun checkAnswer(answer: Int) {
 
         val curWord = wordList[curIndex]
         if (answer == curWord.correct) {
+            correctAudio.start()
             aciertos++
             textViewAciertos.text = "$aciertos/10"
         }
+        else {
+            wrongAudio.start()
+        }
 
-        //tildePrompt.visibility = View.GONE
 
         curIndex++
         if (curIndex >= 10) {

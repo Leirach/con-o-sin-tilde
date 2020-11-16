@@ -1,5 +1,6 @@
 package com.example.proyectofinal
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -49,6 +50,10 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     private var wordSize = SIZE_LARGE // current word size
 
+    // audio feedback
+    lateinit var correctAudio: MediaPlayer
+    lateinit var wrongAudio: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hiato)
@@ -59,16 +64,21 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         tildePrompt.visibility = View.GONE
         wordContainer = findViewById(R.id.wordContainer)
         aciertosTextView = findViewById(R.id.textViewAciertos)
+        contador = findViewById(R.id.counter)
 
         boton_sumar = findViewById(R.id.sumar)
         boton_restar = findViewById(R.id.restar)
-//        boton_enviar = findViewById(R.id.submit)
+
+        // audio
+        correctAudio = MediaPlayer.create(this, R.raw.correct)
+        wrongAudio = MediaPlayer.create(this, R.raw.wrong)
+
         var variable: Int
 
         seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
         seleciona_letra_tilde.visibility = View.INVISIBLE
 
-        boton_sumar.setOnClickListener({
+        boton_sumar.setOnClickListener {
             contador = findViewById(R.id.counter)
             variable = contador.text.toString().toInt()
             if (variable < 6) {
@@ -76,9 +86,9 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
                 contador.setText((variable.toString()))
                 tildePrompt.visibility = View.VISIBLE
             }
-        })
+        }
 
-        boton_restar.setOnClickListener({
+        boton_restar.setOnClickListener {
             contador = findViewById(R.id.counter)
             variable = contador.text.toString().toInt()
             if (variable > 0) {
@@ -86,7 +96,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
                 contador.setText((variable.toString()))
                 tildePrompt.visibility = View.VISIBLE
             }
-        })
+        }
 
 
         startGame()
@@ -121,6 +131,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     // set word in layout according to current index
     private fun setWord() {
+        contador.text = "0"
         tilde_flag = false;
         seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
         seleciona_letra_tilde.visibility = View.INVISIBLE
@@ -229,23 +240,31 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     // checks if the selected answer is correct
     fun checkAnswer(view: View) {
-        contador = findViewById(R.id.counter)
         val tilde = (view.id == R.id.btnYes) // true = user clicked yes, false = user clicked no
         val curWord = wordList[curIndex]
 
         if (!curWord.tilde) {
+            //
             if (contador.text.toString().toInt() == curWord.syllableCount && !tilde) {
+                correctAudio.start()
                 aciertos++
                 textViewAciertos.text = "$aciertos/10"
             }
+            else {
+                wrongAudio.start()
+            }
         } else {
-            if (tilde) { // new question
+            if (tilde) { // dont skip question
                 tilde_flag = true;
                 seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
                 seleciona_letra_tilde.visibility = View.VISIBLE
                 return
             }
+            else {
+                wrongAudio.start()
+            }
         }
+
         tildePrompt.visibility = View.GONE
 
         curIndex++
@@ -263,8 +282,12 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         val pos = word.size - curWord.pos
 
         if (selected == pos) {
+            correctAudio.start()
             aciertos++
             textViewAciertos.text = "$aciertos/10"
+        }
+        else {
+            wrongAudio.start()
         }
 
         tildePrompt.visibility = View.GONE
