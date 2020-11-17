@@ -11,8 +11,10 @@ import android.widget.Button
 import android.widget.Chronometer
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
@@ -36,6 +38,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     lateinit var boton_enviar: Button
     lateinit var contador: TextView
     lateinit var seleciona_letra_tilde: TextView
+    lateinit var counterPrompt: Group
     var tilde_flag: Boolean = false
 
     var selected = -1
@@ -65,9 +68,11 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         wordContainer = findViewById(R.id.wordContainer)
         aciertosTextView = findViewById(R.id.textViewAciertos)
         contador = findViewById(R.id.counter)
-
         boton_sumar = findViewById(R.id.sumar)
         boton_restar = findViewById(R.id.restar)
+        seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
+        contador = findViewById(R.id.counter)
+        counterPrompt = findViewById(R.id.counterPrompt)
 
         // audio
         correctAudio = MediaPlayer.create(this, R.raw.correct)
@@ -75,11 +80,11 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
         var variable: Int
 
-        seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
+
         seleciona_letra_tilde.visibility = View.INVISIBLE
 
         boton_sumar.setOnClickListener {
-            contador = findViewById(R.id.counter)
+
             variable = contador.text.toString().toInt()
             if (variable < 6) {
                 variable += 1
@@ -89,7 +94,6 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         }
 
         boton_restar.setOnClickListener {
-            contador = findViewById(R.id.counter)
             variable = contador.text.toString().toInt()
             if (variable > 0) {
                 variable -= 1
@@ -133,14 +137,17 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     private fun setWord() {
         contador.text = "0"
         tilde_flag = false;
-        seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
         seleciona_letra_tilde.visibility = View.INVISIBLE
+        counterPrompt.visibility = View.VISIBLE
         word = wordList[curIndex].word.chunked(1) // get next word
 
         // reset
         selected = -1
         viewIds = arrayOf()
         wordContainer.removeAllViews() //clear linear layout
+        wordContainer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            verticalBias = 0.3F
+        }
 
         //reusable parameters for inserting view
 
@@ -238,31 +245,32 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
     }
 
+
     // checks if the selected answer is correct
     fun checkAnswer(view: View) {
         val tilde = (view.id == R.id.btnYes) // true = user clicked yes, false = user clicked no
         val curWord = wordList[curIndex]
 
-        if (!curWord.tilde) {
-            //
-            if (contador.text.toString().toInt() == curWord.syllableCount && !tilde) {
+        // cantidad de silabas correctas y respondio lleva tilde correcto
+        if (contador.text.toString().toInt() == curWord.syllableCount && curWord.tilde == tilde) {
+            if (curWord.tilde) { // si lleva tilde, preguntar en cual letra
+                tilde_flag = true;
+                seleciona_letra_tilde.visibility = View.VISIBLE
+                counterPrompt.visibility = View.GONE
+                tildePrompt.visibility = View.GONE
+                wordContainer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    verticalBias = 0.5F
+                }
+                return // RETURN PARA NO SALTARSE LA PREGUNTA
+            }
+            else { // palabra no lleva tilde, marcar correcta
                 correctAudio.start()
                 aciertos++
                 textViewAciertos.text = "$aciertos/10"
             }
-            else {
-                wrongAudio.start()
-            }
-        } else {
-            if (tilde) { // dont skip question
-                tilde_flag = true;
-                seleciona_letra_tilde = findViewById(R.id.seleciona_letra_tilde)
-                seleciona_letra_tilde.visibility = View.VISIBLE
-                return
-            }
-            else {
-                wrongAudio.start()
-            }
+        }
+        else { // cantidad de silabas mal o tilde mal
+            wrongAudio.start()
         }
 
         tildePrompt.visibility = View.GONE
@@ -277,7 +285,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     }
 
 
-    fun checkAnswerTilde() {
+    private fun checkAnswerTilde() {
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
 

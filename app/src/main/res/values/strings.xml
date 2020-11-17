@@ -35,4 +35,5 @@
     <string name="palabra_tilde">¿La palabra lleva tilde?</string>
     <string name="escoge_letra">Escoge la letra con la tilde</string>
     <string name="Sentence">sentence</string>
+    <string name="tiempo">Tiempo</string>
 </resources>

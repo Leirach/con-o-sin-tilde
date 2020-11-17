@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,7 +37,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="24dp"
         android:textSize="18sp"
-        android:text="Tiempo"
+        android:text="@string/tiempo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,6 +53,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
+    <TextView
+        android:id="@+id/seleciona_letra_tilde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:textSize="20sp"
+        android:text="@string/escoge_letra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/wordContainer"
@@ -64,23 +76,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.286">
+        app:layout_constraintVertical_bias="0.3">
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewCounter"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="304dp"
+        android:gravity="center"
+        android:text="@string/counter"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <LinearLayout
-        android:id="@+id/message"
+        android:id="@+id/counterLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCounter"
         tools:layout_editor_absoluteX="0dp">
 
         <Button
             android:id="@+id/restar"
             android:layout_width="40dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="-"
@@ -99,23 +124,12 @@
             android:id="@+id/sumar"
             android:layout_width="40dp"
             android:layout_height="60dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="+"
             android:textSize="25sp" />
     </LinearLayout>
-
-
-<!--    <Button-->
-<!--        android:id="@+id/submit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Enviar"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/message"-->
-<!--        android:onClick="checkAnswer"/>-->
 
     <TextView
         android:id="@+id/textViewTilde"
@@ -125,12 +139,12 @@
         android:text="@string/palabra_tilde"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/tildeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/tildeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
@@ -157,33 +171,16 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/tildePrompt"
-        app:constraint_referenced_ids="textViewTilde, linearLayout"
+        app:constraint_referenced_ids="textViewTilde, tildeLayout"
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="304dp"
-        android:gravity="center"
-        android:text="@string/counter"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/seleciona_letra_tilde"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/counterPrompt"
+        app:constraint_referenced_ids="textViewCounter, counterLayout"
+        android:visibility="visible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="@string/escoge_letra"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
