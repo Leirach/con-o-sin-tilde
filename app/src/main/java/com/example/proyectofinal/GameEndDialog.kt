@@ -24,9 +24,10 @@ class GameEndDialog : DialogFragment() {
             // Inflater returns the defined layout's view
             val view = inflater.inflate(R.layout.dialog_game_end, null)
 
-            val timeText = arguments?.getCharSequence("TIEMPO")
-            val time = arguments?.getInt("ELAPSEDTIME")
-            val aciertos = arguments?.getInt("ACIERTOS")
+            val timeText = arguments?.getCharSequence("TIEMPO") // time for display
+            val time = arguments?.getInt("ELAPSEDTIME") // time for calculating score
+            val aciertos = arguments?.getInt("ACIERTOS") // for calculating score
+            val game = arguments?.getInt("GAME_INDEX") // for routing to the correct leaderboard
             var score: Int = 0
             if (time != null && aciertos != null)
                 score = LeaderboardItem.calculateScore(aciertos, time)
@@ -61,7 +62,9 @@ class GameEndDialog : DialogFragment() {
 
             val btnLeaderboard: ImageButton = view.findViewById(R.id.dialog_leaderboards)
             btnLeaderboard.setOnClickListener {
-                val intent = Intent(activity, LeaderboardActivity::class.java)
+                val intent = Intent(activity, LeaderboardActivity::class.java).apply {
+                    putExtra("com.example.extra.LEADERBOARD", game)
+                }
                 TaskStackBuilder.create(activity)
                     .addNextIntentWithParentStack(intent)
                     .startActivities()

@@ -115,6 +115,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         bundle.putCharSequence("TIEMPO", stopwatch.text) // time as string
         bundle.putInt("ELAPSEDTIME", elapsedTime)   // time as int
         bundle.putInt("ACIERTOS", aciertos)
+        bundle.putInt("GAME_INDEX", 0)
 
         //store best score in databse
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)

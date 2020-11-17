@@ -60,6 +60,8 @@ class LeaderboardActivity : AppCompatActivity() {
             } else {
                 selectedGame--
             }
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left)
+            title.startAnimation(animation)
         }
         else if (view.id == R.id.right) {
             if (selectedGame == 2) {
@@ -67,15 +69,16 @@ class LeaderboardActivity : AppCompatActivity() {
             } else {
                 selectedGame++
             }
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right)
+            title.startAnimation(animation)
         }
 
-        title.text = getString(gameTitles[selectedGame])
-        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right)
-        title.startAnimation(animation)
         filterSelected()
     }
 
     private fun filterSelected() {
+        title.text = getString(gameTitles[selectedGame])
+
         filteredLeaderboard = leaderboard.filter {
             return@filter it.juego == selectedGame
         }

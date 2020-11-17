@@ -180,11 +180,12 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         bundle.putCharSequence("TIEMPO", stopwatch.text) // time as string
         bundle.putInt("ELAPSEDTIME", elapsedTime)   // time as int
         bundle.putInt("ACIERTOS", aciertos)
+        bundle.putInt("GAME_INDEX", 2)
 
         //store best score in databse
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(
             AcentosViewModel::class.java)
-        dbViewModel.leaderboardInsert(LeaderboardItem(0, System.currentTimeMillis(), aciertos, elapsedTime))
+        dbViewModel.leaderboardInsert(LeaderboardItem(2, System.currentTimeMillis(), aciertos, elapsedTime))
 
         //start dialog with bundled data
         dialog.arguments = bundle
