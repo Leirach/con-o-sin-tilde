@@ -7,4 +7,7 @@
     <color name="colorAccent">#A63446</color>
     <color name="default_text_color">#000000</color>
     <color name="background">#F0F4F5</color>
+    <color name="success">#5cb85c</color>
+    <color name="error">#d9534f</color>
+
 </resources>

@@ -2,6 +2,7 @@ package com.example.proyectofinal
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.os.SystemClock
 import android.util.DisplayMetrics
 import android.util.Log
@@ -19,8 +20,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
 import com.example.proyectofinal.db.LeaderboardItem
 import com.example.proyectofinal.db.ReglaGeneral
+import kotlinx.android.synthetic.main.activity_hiato.view.*
 import kotlinx.android.synthetic.main.activity_regla_general.*
+import kotlinx.coroutines.*
 import java.io.InputStream
+import java.util.concurrent.TimeUnit
 import kotlin.time.seconds
 
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
@@ -166,18 +170,42 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         val tilde = (view.id == R.id.btnYes)
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
+        var delayTime: Long = 1000
+        val correctWord = showCorrectAnswer(curWord.word) //get reference to correct answer TextView
 
         if (selected == pos && tilde == curWord.tilde) {
-            correctAudio.start()
             aciertos++
             textViewAciertos.text = "$aciertos/10"
+            // user feedback
+            delayTime = 600
+            correctAudio.start()
+            correctWord.setTextColor(ContextCompat.getColor(this, R.color.success)) //green text correct answer
         }
         else {
+            delayTime = 1000
             wrongAudio.start()
+            correctWord.setTextColor(ContextCompat.getColor(this, R.color.error)) //red text bad answer
         }
-
         tildePrompt.visibility = View.GONE
+        GlobalScope.launch(context = Dispatchers.Main) {
+            delay(delayTime)
+            nextQuestion()
+        }
+    }
 
+    private fun showCorrectAnswer(word: String): TextView {
+        wordContainer.removeAllViews()
+        val correctWord = TextView(this) // replaces main linearlayout with the correct word
+        correctWord.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize+20)
+        correctWord.gravity = Gravity.CENTER
+        correctWord.text = word
+        correctWord.id = View.generateViewId()
+        correctWord.isSingleLine = true
+        wordContainer.addView(correctWord)
+        return correctWord
+    }
+
+    private fun nextQuestion() {
         curIndex++
         if (curIndex >= 10) {
             gameEnd()

@@ -24,11 +24,12 @@
     <string name="tilde_prompt">¿La sílaba lleva tilde?</string>
     <string name="credits">
         Creado por estudiantes del Tecnológico de Monterrey para el Centro de Escritura como proyecto para la materia Desarrollo de Aplicaciones Móviles Android
-        \n\nProf. Jorge Luis Flores Marroquín
+        \nProf. Jorge Luis Flores Marroquín
         \n\nDesarrollado por los alumnos:
         \n<b>Juan Carlos De León Álvarez</b>
         \n<b>José Ricardo Treviño Rodríguez</b>
         \n<b>César Alejandro Cisneros Rodríguez</b>
+        \n\nAgradecimientos especiales a las maestras Martha Pérez y Yazmín Carrizales
     </string>
     <string name="leaderboards_title">Mejores puntuaciones</string>
     <string name="dialog_pts"><![CDATA[%1$d<small>pts</small>]]></string>

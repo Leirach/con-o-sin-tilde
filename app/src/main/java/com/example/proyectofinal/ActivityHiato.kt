@@ -24,6 +24,10 @@ import com.example.proyectofinal.db.ReglaGeneral
 
 import com.example.proyectofinal.db.Hiato
 import kotlinx.android.synthetic.main.activity_regla_general.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     //constants
@@ -195,36 +199,6 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     private fun updateSelected(idx: Int) {
         // if previously selected, get previous and reduce text size
         if (tilde_flag) {
-
-            if (selected != -1) {
-                val prev: TextView = findViewById(viewIds[selected])
-                prev.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)
-                prev.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.default_text_color
-                    )
-                ) // change color
-                val param =
-                    LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
-                prev.layoutParams = param
-            }
-
-            val selectedView: TextView =
-                findViewById(viewIds[idx]) // get currently selected view from array
-            selectedView.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize + 20) //increase text size
-            selectedView.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorPrimary
-                )
-            ) // change color
-            val param = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.7f
-            ) //increase container size
-            selectedView.layoutParams = param
             selected = idx
             checkAnswerTilde()
         }
@@ -236,6 +210,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     fun checkAnswer(view: View) {
         val tilde = (view.id == R.id.btnYes) // true = user clicked yes, false = user clicked no
         val curWord = wordList[curIndex]
+        var delayTime: Long
 
         // cantidad de silabas correctas y respondio lleva tilde correcto
         if (contador.text.toString().toInt() == curWord.syllableCount && curWord.tilde == tilde) {
@@ -251,41 +226,70 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             }
             else { // palabra no lleva tilde, marcar correcta
                 correctAudio.start()
+                val correctWord = showCorrectAnswer(curWord.syllable)
+                correctWord.setTextColor(ContextCompat.getColor(this, R.color.success)) //green text correct answer
+                delayTime = 600
                 aciertos++
                 textViewAciertos.text = "$aciertos/10"
             }
         }
         else { // cantidad de silabas mal o tilde mal
             wrongAudio.start()
+            val correctWord = showCorrectAnswer(curWord.syllable)
+            delayTime = 1000
+            correctWord.setTextColor(ContextCompat.getColor(this, R.color.error)) //red text bad answer
         }
 
         tildePrompt.visibility = View.GONE
 
-        curIndex++
-        if (curIndex >= 10) {
-            gameEnd()
-        } else {
-            setWord()
+        GlobalScope.launch(context = Dispatchers.Main) {
+            delay(delayTime)
+            nextQuestion()
         }
-
     }
 
 
     private fun checkAnswerTilde() {
         val curWord = wordList[curIndex]
         val pos = word.size - curWord.pos
+        var delayTime: Long
 
         if (selected == pos) {
             correctAudio.start()
+            val correctWord = showCorrectAnswer(curWord.syllable)
+            correctWord.setTextColor(ContextCompat.getColor(this, R.color.success)) //green text correct answer
+            delayTime = 600
             aciertos++
             textViewAciertos.text = "$aciertos/10"
         }
         else {
             wrongAudio.start()
+            val correctWord = showCorrectAnswer(curWord.syllable)
+            delayTime = 1000
+            correctWord.setTextColor(ContextCompat.getColor(this, R.color.error)) //red text bad answer
         }
 
         tildePrompt.visibility = View.GONE
 
+        GlobalScope.launch(context = Dispatchers.Main) {
+            delay(delayTime)
+            nextQuestion()
+        }
+    }
+
+    private fun showCorrectAnswer(word: String): TextView {
+        wordContainer.removeAllViews()
+        val correctWord = TextView(this) // replaces main linearlayout with the correct word
+        correctWord.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize+20)
+        correctWord.gravity = Gravity.CENTER
+        correctWord.text = word
+        correctWord.id = View.generateViewId()
+        correctWord.isSingleLine = true
+        wordContainer.addView(correctWord)
+        return correctWord
+    }
+
+    private fun nextQuestion() {
         curIndex++
         if (curIndex >= 10) {
             gameEnd()
