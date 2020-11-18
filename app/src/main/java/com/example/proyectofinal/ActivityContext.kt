@@ -39,7 +39,7 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
 
     //var word = listOf<String>("Sen ten ce") //sentence
 
-    lateinit var wordList: MutableList<Contexto> // word list
+    lateinit var wordList: List<Contexto> // word list
     var curIndex = 0
     var aciertos = 0
 
@@ -71,29 +71,12 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(
             AcentosViewModel::class.java
         )
-        //dbViewModel.getRandomContexto()
-       /* dbViewModel.rgRandom.observe(this, Observer { words -> //Database, todavía no se encuentra
+        dbViewModel.getRandomContexto()
+       dbViewModel.contextRandom.observe(this, Observer { words ->
             wordList = words // get words from db
             setWord()
             stopwatch.start()
-        })*/
-        wordList = mutableListOf<Contexto>()
-        wordList.clear()
-        wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 1, "Elija la opción 1"))
-        wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 2, "Elija la opción 2"))
-        wordList.add(Contexto("ejemplo", "Opción 1", "Opción 2", "Opción 3", 3, "Elija la opción 3"))
-        wordList.add(Contexto("opcion dum", "Opción 1", "Opción 2", "", 2, "Prueba para ocultar opciones"))
-        wordList.add(Contexto("Como", "Comó", "Cómo", "Como", 3, "Yo _____ huevo en el desayuno"))
-        wordList.add(Contexto("Porque", "Porque", "Porqué", "Por que", 2, "Lo digó ______ sí"))
-        wordList.add(Contexto("Mas", "Más", "Mas", "Cualquiera de las dos", 1, "El juego cuesta 700 pesos ____ iva"))
-        wordList.add(Contexto("Mas", "Más", "Mas", "Cualquiera de las dos", 2, "No hay ___ que pan aquí"))
-        wordList.add(Contexto("Porque", "Porque", "Porqué", "Por que", 2, "¿_____ no nos dieron asueto?"))
-        wordList.add(Contexto("Como", "Comó", "Cómo", "Como", 1, "¿_____ le va a usted?"))
-        wordList.add(Contexto("Papa", "Papá", "Papa", "Cualquiera de las dos", 2, "El ______ de Antonio se enojo mucho"))
-        wordList.add(Contexto("opcion dum", "Opción 1", "Opción 2", "Opción 3", 2, "Está opción extra es para que no truene el programa"))
-
-        setWord()
-        stopwatch.start()
+        })
     }
 
     // set word in layout according to current index

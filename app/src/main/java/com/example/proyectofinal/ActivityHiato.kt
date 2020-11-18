@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -45,8 +46,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     var word = listOf<String>("San dia a") // syllables
     var viewIds = arrayOf<Int>()                // ids of corresponding syllables in layout
 
-    lateinit var wordList: MutableList<Hiato> // word list
-//    = mutableListOf<ReglaHiato>(ReglaHiato("Sandia", "San dia a", 3, true, 2))
+    lateinit var wordList: List<Hiato> // word list
 
     var curIndex = 0
     var aciertos = 0
@@ -78,9 +78,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         correctAudio = MediaPlayer.create(this, R.raw.correct)
         wrongAudio = MediaPlayer.create(this, R.raw.wrong)
 
-        var variable: Int
-
-
+        var variable: Int // syllable counter
         seleciona_letra_tilde.visibility = View.INVISIBLE
 
         boton_sumar.setOnClickListener {
@@ -88,7 +86,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             variable = contador.text.toString().toInt()
             if (variable < 6) {
                 variable += 1
-                contador.setText((variable.toString()))
+                contador.text = variable.toString()
                 tildePrompt.visibility = View.VISIBLE
             }
         }
@@ -97,7 +95,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             variable = contador.text.toString().toInt()
             if (variable > 0) {
                 variable -= 1
-                contador.setText((variable.toString()))
+                contador.text = variable.toString()
                 tildePrompt.visibility = View.VISIBLE
             }
         }
@@ -111,26 +109,13 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
         val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(
             AcentosViewModel::class.java
         )
-//        dbViewModel.getRandomReglaGeneral()
-//        dbViewModel.randomReglaGeneral.observe(this, Observer { words ->
-//            wordList = words // get words from db
-//            setWord()
-//            stopwatch.start()
-//        })
-        wordList = mutableListOf<Hiato>()
-        wordList.clear()
-        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
-        wordList.add(Hiato("Adios", "A dios", 2, false, -1))
-        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
-        wordList.add(Hiato("Adios", "A dios", 3, false, 2))
-        wordList.add(Hiato("Cueva", "Cue va", 2, false, -1))
-        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
-        wordList.add(Hiato("Adios", "A dios", 2, false, -1))
-        wordList.add(Hiato("Sandia", "San di a", 3, true, 2))
-        wordList.add(Hiato("Adios", "A dios", 3, false, 2))
-        wordList.add(Hiato("Cueva", "Cue va", 2, false, -1))
-        setWord()
-        stopwatch.start()
+        dbViewModel.getRandomHiato()
+        dbViewModel.hiatoRandom.observe(this, Observer { words ->
+            wordList = words // get words from db
+            Log.d("TAG", wordList.toString())
+            setWord()
+            stopwatch.start()
+        })
     }
 
     // set word in layout according to current index
