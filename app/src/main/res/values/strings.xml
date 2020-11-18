@@ -15,7 +15,7 @@
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="regla_general">Regla general</string>
-    <string name="comenzar">Comenzar</string>
+    <string name="comenzar">Jugar</string>
     <string name="izquierda">Izquierda</string>
     <string name="derecha">Derecha</string>
     <string name="imagen">Imagen del tema</string>
@@ -37,4 +37,6 @@
     <string name="escoge_letra">Escoge la letra con la tilde</string>
     <string name="Sentence">sentence</string>
     <string name="tiempo">Tiempo</string>
+    <string name="instructions_regla_general">Selecciona la sílaba tónica.</string>
+    <string name="preference_key">com.example.PREFERENCES</string>
 </resources>

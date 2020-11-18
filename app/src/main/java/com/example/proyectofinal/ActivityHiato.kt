@@ -140,7 +140,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
 
         //reusable parameters for inserting view
 
-        wordSize = if (wordList[curIndex].word.length >= 10) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
+        wordSize = if (wordList[curIndex].syllable.length >= 9) SIZE_SMALL else SIZE_LARGE // switches syllable size depending on word length
         val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f)
         word.forEachIndexed { idx, elem ->    // forEach syllable
             val syllable = TextView(this)

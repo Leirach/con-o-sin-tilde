@@ -2,10 +2,7 @@ package com.example.proyectofinal
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
 import android.os.SystemClock
-import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -20,12 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.proyectofinal.db.AcentosViewModel
 import com.example.proyectofinal.db.LeaderboardItem
 import com.example.proyectofinal.db.ReglaGeneral
-import kotlinx.android.synthetic.main.activity_hiato.view.*
 import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlinx.coroutines.*
-import java.io.InputStream
-import java.util.concurrent.TimeUnit
-import kotlin.time.seconds
 
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     //constants
@@ -36,6 +29,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     lateinit var stopwatch: Chronometer
     lateinit var tildePrompt: Group
     lateinit var aciertosTextView: TextView
+    lateinit var instructions: TextView
 
     var selected = -1
     var word = listOf<String>("si", "la", "ba") // syllables
@@ -61,6 +55,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
         tildePrompt.visibility = View.GONE
         wordContainer = findViewById(R.id.wordContainer)
         aciertosTextView = findViewById(R.id.textViewAciertos)
+        instructions = findViewById(R.id.instructions)
 
         correctAudio = MediaPlayer.create(this, R.raw.correct)
         wrongAudio = MediaPlayer.create(this, R.raw.wrong)
@@ -78,6 +73,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
             wordList = words // get words from db
             setWord()
             stopwatch.start()
+            instructions.visibility = View.VISIBLE
         })
     }
 
@@ -147,6 +143,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     // updates selected syllable in view
     private fun updateSelected(idx: Int) {
         // if previously selected, get previous and reduce text size
+        instructions.visibility = View.INVISIBLE
         if (selected != -1) {
             val prev: TextView = findViewById(viewIds[selected])
             prev.setTextSize(TypedValue.COMPLEX_UNIT_SP, wordSize)

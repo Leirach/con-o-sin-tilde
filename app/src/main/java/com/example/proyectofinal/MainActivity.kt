@@ -1,18 +1,18 @@
 package com.example.proyectofinal
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.proyectofinal.db.AcentosViewModel
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
+import androidx.core.view.MotionEventCompat
+import kotlin.math.abs
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +30,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var boton_texto: ImageButton
     lateinit var image: ImageView
 
+    val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
+    val images = arrayOf(R.drawable.regla_general, R.drawable.contexto, R.drawable.watermelon)
+    val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
+    var index: Int = 0;
+
+    // for swipe gestures
+    private val MIN_DISTANCE = 150f
+    private var x1: Float = 0f
+    private var x2: Float = 0f
+
+    private var firstTimePlaying = arrayOf(true, true, true)
+    private var preferenceKeys = arrayOf("regla_general", "contexto", "hiatos")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         title = findViewById(R.id.game_name)
         boton_info = findViewById(R.id.btn_info)
 
+        val sharedPref = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+        firstTimePlaying[0] = sharedPref.getBoolean("regla_general", true)
+        firstTimePlaying[1] = sharedPref.getBoolean("contexto", true)
+        firstTimePlaying[2] = sharedPref.getBoolean("hiatos", true)
+
         // ==== PRUEBA DB ====
 //        val dbViewModel = ViewModelProvider.AndroidViewModelFactory(application).create(AcentosViewModel::class.java)
 //        dbViewModel.rgRandom.observe(this, Observer { words ->
@@ -52,47 +70,43 @@ class MainActivity : AppCompatActivity() {
 //        })
         // ==== PRUEBA DB ====
 
-        val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
-        val images = arrayOf(R.drawable.regla_general, R.drawable.contexto, R.drawable.watermelon)
-        val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
-        var index: Int = 0;
-
-
         boton_juego.setOnClickListener {
-            //Log.d("TAG", "Hallo")
             val juegoNumero = arregloJuegos[index]
-            val intent = Intent(this, AnimationActivity::class.java).apply {
-                putExtra("com.example.extra.GAME_MODE", juegoNumero)
+            lateinit var nextIntent: Intent
+            if (firstTimePlaying[index]) {
+                nextIntent = Intent(this, AnimationActivity::class.java).apply {
+                    putExtra("com.example.extra.GAME_MODE", juegoNumero)
+                }
+                sharedPref.edit {
+                    this.putBoolean(preferenceKeys[index], false)
+                    this.apply()
+                }
             }
-            startActivity(intent)
+            else {
+                when (juegoNumero) {
+                    R.id.regla_general -> {
+                        nextIntent = Intent(this, ActivityReglaGeneral::class.java)
+                    }
+                    R.id.contexto -> {
+                        nextIntent = Intent(this, ActivityContext::class.java)
+                    }
+                    R.id.hiato -> {
+                        nextIntent = Intent(this, ActivityHiato::class.java)
+                    }
+                }
+            }
+
+            startActivity(nextIntent)
             // startActivityForResult(intent, TEXT_REQUEST)
         }
 
-        boton_izq.setOnClickListener(View.OnClickListener {view ->
-            if (index == 0) {
-                index = 2 // max games
-            } else {
-                index--
-            }
+        boton_izq.setOnClickListener { view ->
+            left()
+        }
 
-            title.text = getString(gameTitles[index])
-            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left)
-            title.startAnimation(animation)
-            image.setImageResource(images[index])
-        })
-
-        boton_der.setOnClickListener(View.OnClickListener { view ->
-            if (index == 2) {
-                index = 0
-            } else {
-                index++
-            }
-
-            title.text = getString(gameTitles[index])
-            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right)
-            title.startAnimation(animation)
-            image.setImageResource(images[index])
-        })
+        boton_der.setOnClickListener{ view ->
+            right()
+        }
 
         boton_leaderboard.setOnClickListener { view ->
             Log.d("TAG", "Hallo Leaderboard")
@@ -101,7 +115,6 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
             // startActivityForResult(intent, TEXT_REQUEST)
-
         }
 
         boton_info.setOnClickListener {
@@ -109,6 +122,50 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun left() {
+        if (index == 0) {
+            index = 2 // max games
+        } else {
+            index--
+        }
+
+        title.text = getString(gameTitles[index])
+        image.setImageResource(images[index])
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.left_in)
+        title.startAnimation(animation)
+        //image.startAnimation(animation)
+    }
+
+    fun right() {
+        if (index == 2) {
+            index = 0
+        } else {
+            index++
+        }
+
+        title.text = getString(gameTitles[index])
+        image.setImageResource(images[index])
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.right_in)
+        title.startAnimation(animation)
+        //image.startAnimation(animation)
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> x1 = event.x
+            MotionEvent.ACTION_UP -> {
+                x2 = event.x
+                val deltaX: Float = x2 - x1
+                if (deltaX > MIN_DISTANCE) {
+                    left()
+                } else if (deltaX < -MIN_DISTANCE) {
+                    right()
+                }
+            }
+        }
+        return super.onTouchEvent(event)
     }
 
 

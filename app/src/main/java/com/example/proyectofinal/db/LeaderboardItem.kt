@@ -2,6 +2,7 @@ package com.example.proyectofinal.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlin.math.max
 import kotlin.math.pow
 
 @Entity(tableName = "leaderboard")
@@ -18,7 +19,8 @@ class LeaderboardItem(
 
     companion object {
         fun calculateScore(aciertos: Int, tiempo: Int): Int {
-            return ((aciertos * 10.0f).pow(2) / tiempo).toInt()
+            val score = aciertos*100 - tiempo * 2
+            return max(score, 0) //min 0 score
         }
     }
 }
