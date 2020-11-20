@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CreditosActivity"
+            android:name=".ExplanationActivity"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".CreditosActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LeaderboardActivity"
             android:parentActivityName=".MainActivity">

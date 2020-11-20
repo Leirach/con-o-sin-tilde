@@ -20,75 +20,61 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@android:color/transparent"/>
 
-    <TextView
-        android:id="@+id/nombreAplicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.080" />
-
-    <ImageView
-        android:id="@+id/logoTema"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267"
-        app:srcCompat="@drawable/regla_general"
-        android:contentDescription="@string/imagen" />
-
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
 
         <ImageButton
-            android:foreground="?android:attr/selectableItemBackground"
-            android:background="@android:color/transparent"
             android:id="@+id/left"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginHorizontal="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/izquierda"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/chevron_left_24px"
-            android:tint="@color/colorAccent"
-            android:contentDescription="@string/izquierda" />
+            android:tint="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/game_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/regla_general"
-            android:textSize="24sp" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/game_name"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="@string/regla_general"-->
+        <!--            android:textSize="24sp" />-->
+
+        <ImageView
+            android:id="@+id/logoTema"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/imagen"
+            app:srcCompat="@drawable/regla_general"
+            android:layout_weight="1"/>
 
         <ImageButton
             android:id="@+id/right"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:background="@android:color/transparent"
-            android:gravity="center"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginHorizontal="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/derecha"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/chevron_right_24px"
-            android:tint="@color/colorAccent"
-            android:contentDescription="@string/derecha" />
+            android:tint="@color/colorAccent" />
 
     </LinearLayout>
 
@@ -96,9 +82,10 @@
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="48dp"
         android:text="@string/comenzar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -126,7 +113,8 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:src="@drawable/ondemand_video_24px" />
+            android:src="@drawable/ondemand_video_24px"
+            android:onClick="gotoAnimation"/>
 
         <ImageButton
             android:id="@+id/text_explained"
@@ -134,7 +122,8 @@
             android:layout_height="48dp"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
-            android:src="@drawable/description_24px" />
+            android:src="@drawable/description_24px"
+            android:onClick="gotoExplanation"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

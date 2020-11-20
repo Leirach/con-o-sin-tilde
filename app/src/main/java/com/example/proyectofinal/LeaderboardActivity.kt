@@ -60,7 +60,7 @@ class LeaderboardActivity : AppCompatActivity() {
             } else {
                 selectedGame--
             }
-            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left)
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.left_in)
             title.startAnimation(animation)
         }
         else if (view.id == R.id.right) {
@@ -69,7 +69,7 @@ class LeaderboardActivity : AppCompatActivity() {
             } else {
                 selectedGame++
             }
-            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right)
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.right_in)
             title.startAnimation(animation)
         }
 

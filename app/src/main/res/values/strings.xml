@@ -23,14 +23,18 @@
     <string name="aciertos">Aciertos</string>
     <string name="tilde_prompt">¿La sílaba lleva tilde?</string>
     <string name="credits">
-        Creado por estudiantes del Tecnológico de Monterrey para el Centro de Escritura como proyecto para la materia Desarrollo de Aplicaciones Móviles Android
+        Creado por estudiantes de la carrera ITC del Tecnológico de Monterrey para el Centro de Escritura como proyecto para la materia Desarrollo de Aplicaciones Móviles Android
         \nProf. Jorge Luis Flores Marroquín
-        \n\nDesarrollado por los alumnos:
+        \n\nDesarrolladores:
         \n<b>Juan Carlos De León Álvarez</b>
         \n<b>José Ricardo Treviño Rodríguez</b>
         \n<b>César Alejandro Cisneros Rodríguez</b>
-        \n\nAgradecimientos especiales a las maestras Martha Pérez y Yazmín Carrizales
     </string>
+    <string name="special_thanks">
+        Agradecimientos especiales:
+        \nMaestras Martha Pérez y Yazmín Carrizales
+        \nDiseño de logos Ariadna De León
+        \nSonidos de zapsplat.com</string>
     <string name="leaderboards_title">Mejores puntuaciones</string>
     <string name="dialog_pts"><![CDATA[%1$d<small>pts</small>]]></string>
     <string name="palabra_tilde">¿La palabra lleva tilde?</string>
@@ -39,4 +43,31 @@
     <string name="tiempo">Tiempo</string>
     <string name="instructions_regla_general">Selecciona la sílaba tónica.</string>
     <string name="preference_key">com.example.PREFERENCES</string>
+    <string name="contexto_explanation_1">Hay palabras cuya acentuación depende del contexto en el que se utilicen, ya que admiten varias formas que son correctas. Es el caso de algunas conjugaciones verbales, los acentos diacríticos, los interrogativos, etc.</string>
+    <string name="contexto_explanation_2">Es necesario mencionar también algunas actualizaciones y casos especiales:</string>
+    <string name="contexto_explanation_3">
+        <li><b><font fgcolor='#A63446'>Pronombres demostrativos:</font></b> este, ese, aquel; no se escriben con tilde.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Monosílabos:</font></b> No se acentúan, salvo en los casos de diacríticos (mas-más, el-él, etc.)</li>
+        \n\n<li><b><font fgcolor='#A63446'>Interrogativos y exclamativos:</font></b> adónde, cómo, cuál, cuán, cuándo, cuánto, dónde, qué y quién; pueden tener función de relativos y entonces no se acentúan.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Mayúsculas:</font></b> llevan tilde según la regla.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Adverbio “solo”:</font></b> se escribe sin tilde.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Palabras compuestas:</font></b> la regla se aplica como si fuera una palabra simple.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Palabras compuestas con guion (-):</font></b> se toman en cuenta como dos palabras.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Adverbios terminados en –mente:</font></b> conservan la acentuación del adjetivo del cual provienen.</li>
+        \n\n<li><b><font fgcolor='#A63446'>Aún:</font></b> lleva tilde si puede sustituirse por todavía.</li>
+    </string>
+    <string name="regla_general_explanation_1">
+        <li><b>Sobresdrújulas:</b> Llevan tilde siempre.</li>
+        \n\n<li><b>Esdrújulas:</b> Llevan tilde siempre.</li>
+        \n\n<li><b>Graves:</b> Llevan tilde cuando <i>no</i> terminan en N, S o vocal.</li>
+        \n\n<li><b>Agudas:</b> Llevan tilde cuando terminan en N, S o vocal.</li></string>
+    <string name="hiatos_explanation_1">
+        <li>Vocales fuertes (F) AEO</li>
+        \n\n<li>Vocales débiles (D) UI</li>
+        \n\n<li>Diptongo:  vocales juntas, que se pronuncian en la misma sílaba.</li>
+        \n\n<li>Los diptongos pueden formarse con FD DF DD</li>
+        \n\n<li>FF nunca hace diptongo</li>
+        \n\n<li>Las vocales D con tilde se comportan como F</li>
+        \n\n<li>Hiato. Vocales subsecuentes que se pronuncian en sílabas distintas.</li>
+    </string>
 </resources>

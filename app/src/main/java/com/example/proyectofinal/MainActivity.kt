@@ -2,6 +2,7 @@ package com.example.proyectofinal
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -24,14 +25,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var boton_izq: ImageButton
     lateinit var boton_der: ImageButton
     lateinit var boton_info: ImageButton
-    lateinit var title: TextView
     lateinit var boton_leaderboard: ImageButton
     lateinit var boton_animation: ImageButton
     lateinit var boton_texto: ImageButton
     lateinit var image: ImageView
+    lateinit var sharedPref: SharedPreferences
 
     val arregloJuegos = arrayOf<Int>(R.id.regla_general, R.id.contexto, R.id.hiato)
-    val images = arrayOf(R.drawable.regla_general, R.drawable.contexto, R.drawable.watermelon)
+    val images = arrayOf(R.drawable.regla_general, R.drawable.contexto, R.drawable.hiatos)
     val gameTitles = arrayOf(R.string.regla_general, R.string.contexto, R.string.hiato)
     var index: Int = 0;
 
@@ -52,10 +53,10 @@ class MainActivity : AppCompatActivity() {
         boton_der = findViewById(R.id.right)
         boton_leaderboard = findViewById(R.id.leaderboards)
         image = findViewById(R.id.logoTema)
-        title = findViewById(R.id.game_name)
+        //title = findViewById(R.id.game_name)
         boton_info = findViewById(R.id.btn_info)
 
-        val sharedPref = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
         firstTimePlaying[0] = sharedPref.getBoolean("regla_general", true)
         firstTimePlaying[1] = sharedPref.getBoolean("contexto", true)
         firstTimePlaying[2] = sharedPref.getBoolean("hiatos", true)
@@ -131,11 +132,11 @@ class MainActivity : AppCompatActivity() {
             index--
         }
 
-        title.text = getString(gameTitles[index])
+        // title.text = getString(gameTitles[index])
         image.setImageResource(images[index])
         val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.left_in)
-        title.startAnimation(animation)
-        //image.startAnimation(animation)
+        // title.startAnimation(animation)
+        image.startAnimation(animation)
     }
 
     fun right() {
@@ -145,11 +146,11 @@ class MainActivity : AppCompatActivity() {
             index++
         }
 
-        title.text = getString(gameTitles[index])
+        // title.text = getString(gameTitles[index])
         image.setImageResource(images[index])
         val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.right_in)
-        title.startAnimation(animation)
-        //image.startAnimation(animation)
+        // title.startAnimation(animation)
+        image.startAnimation(animation)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -166,6 +167,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    fun gotoAnimation(view: View) {
+        val juegoNumero = arregloJuegos[index]
+        val intent = Intent(this, AnimationActivity::class.java).apply {
+            putExtra("com.example.extra.GAME_MODE", juegoNumero)
+        }
+        if (firstTimePlaying[index]) {
+            sharedPref.edit {
+                this.putBoolean(preferenceKeys[index], false)
+                this.apply()
+            }
+        }
+        startActivity(intent)
+    }
+    fun gotoExplanation(view: View) {
+        val juegoNumero = index
+        val intent = Intent(this, ExplanationActivity::class.java).apply {
+            putExtra("com.example.extra.GAME_MODE", juegoNumero)
+        }
+        startActivity(intent)
     }
 
 
