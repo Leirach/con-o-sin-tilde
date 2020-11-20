@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectofinal">
+    package="com.leirach.acentos">
 
     <application
         android:allowBackup="false"
@@ -10,31 +10,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ExplanationActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name="com.leirach.acentos.ExplanationActivity"
+            android:parentActivityName="com.leirach.acentos.MainActivity"/>
         <activity
-            android:name=".CreditosActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.leirach.acentos.CreditosActivity"
+            android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
-            android:name=".LeaderboardActivity"
-            android:parentActivityName=".MainActivity">
+            android:name="com.leirach.acentos.LeaderboardActivity"
+            android:parentActivityName="com.leirach.acentos.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.leirach.acentos.MainActivity" />
         </activity>
         <activity
-            android:name=".ActivityHiato"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.leirach.acentos.ActivityHiato"
+            android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
-            android:name=".ActivityContext"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.leirach.acentos.ActivityContext"
+            android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
-            android:name=".AnimationActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.leirach.acentos.AnimationActivity"
+            android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
-            android:name=".ActivityReglaGeneral"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+            android:name="com.leirach.acentos.ActivityReglaGeneral"
+            android:parentActivityName="com.leirach.acentos.MainActivity" />
+        <activity android:name="com.leirach.acentos.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
