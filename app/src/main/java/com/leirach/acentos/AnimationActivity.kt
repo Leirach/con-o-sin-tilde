@@ -46,8 +46,6 @@ class AnimationActivity : AppCompatActivity() {
         videoView.setMediaController(mediaController)
         videoView.start()
 
-        videoView.onfi
-
         btnContinue.setOnClickListener {
             when (gameNumber) {
                 R.id.regla_general -> {
