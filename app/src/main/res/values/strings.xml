@@ -74,4 +74,5 @@
         <li>Las vocales D con tilde se comportan como F</li>
         \n\n<li>Hiato. Vocales subsecuentes que se pronuncian en sílabas distintas.</li>
     </string>
+    <string name="saltar">Saltar</string>
 </resources>

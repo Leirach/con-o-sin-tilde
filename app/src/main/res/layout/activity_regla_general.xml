@@ -99,20 +99,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp">
         <Button
-            android:onClick="checkAnswer"
-            android:id="@+id/btnYes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/yes"
-            android:layout_weight="1" />
-        <Button
-            android:onClick="checkAnswer"
             android:id="@+id/btnNo"
+            android:onClick="checkAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:text="@string/no"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/btnYes"
+            android:onClick="checkAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/yes"
             android:layout_weight="1" />
     </LinearLayout>
 

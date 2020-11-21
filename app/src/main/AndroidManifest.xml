@@ -30,6 +30,7 @@
             android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
             android:name="com.leirach.acentos.AnimationActivity"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName="com.leirach.acentos.MainActivity" />
         <activity
             android:name="com.leirach.acentos.ActivityReglaGeneral"

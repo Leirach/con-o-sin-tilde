@@ -3,8 +3,8 @@
 <!--    <color name="colorPrimary">#6200EE</color>-->
     <color name="colorPrimary">#573280</color>
     <color name="colorPrimaryDark">#23022E</color>
-    <color name="colorSecondary">#0C6291</color>
-    <color name="colorAccent">#A63446</color>
+    <color name="colorSecondary">#8EB924</color>
+    <color name="colorAccent">#871E6D</color>
     <color name="default_text_color">#000000</color>
     <color name="background">#F0F4F5</color>
     <color name="success">#5cb85c</color>
