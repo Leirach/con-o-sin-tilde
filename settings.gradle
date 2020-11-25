@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Proyecto Final"
+rootProject.name = "Con o sin tilde"
