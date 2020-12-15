@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.proyectofinal"
+        applicationId "com.leirach.acentos"
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 1
