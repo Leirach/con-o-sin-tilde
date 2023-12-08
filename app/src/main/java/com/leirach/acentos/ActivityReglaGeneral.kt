@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.leirach.acentos.db.AcentosViewModel
 import com.leirach.acentos.db.LeaderboardItem
 import com.leirach.acentos.db.ReglaGeneral
-import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlinx.coroutines.*
 
 class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
@@ -129,7 +128,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
     private fun resetGame() {
         curIndex = 0
         aciertos = 0
-        textViewAciertos.text = "0/10"
+        aciertosTextView.text = "0/10"
         stopwatch.base = SystemClock.elapsedRealtime();
         startGame()
     }
@@ -172,7 +171,7 @@ class ActivityReglaGeneral : AppCompatActivity(), GameEndDialogHandler {
 
         if (selected == pos && tilde == curWord.tilde) {
             aciertos++
-            textViewAciertos.text = "$aciertos/10"
+            aciertosTextView.text = "$aciertos/10"
             // user feedback
             delayTime = 600
             correctAudio.start()

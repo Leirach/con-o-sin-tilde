@@ -22,7 +22,6 @@ import com.leirach.acentos.db.AcentosViewModel
 import com.leirach.acentos.db.LeaderboardItem
 
 import com.leirach.acentos.db.Hiato
-import kotlinx.android.synthetic.main.activity_regla_general.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -183,7 +182,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
     private fun resetGame() {
         curIndex = 0
         aciertos = 0
-        textViewAciertos.text = "0/10"
+        aciertosTextView.text = "0/10"
         stopwatch.base = SystemClock.elapsedRealtime();
         startGame()
     }
@@ -229,7 +228,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
                 correctWord.setTextColor(ContextCompat.getColor(this, R.color.success)) //green text correct answer
                 delayTime = 600
                 aciertos++
-                textViewAciertos.text = "$aciertos/10"
+                aciertosTextView.text = "$aciertos/10"
             }
         }
         else { // cantidad de silabas mal o tilde mal
@@ -259,7 +258,7 @@ class ActivityHiato : AppCompatActivity(), GameEndDialogHandler {
             correctWord.setTextColor(ContextCompat.getColor(this, R.color.success)) //green text correct answer
             delayTime = 600
             aciertos++
-            textViewAciertos.text = "$aciertos/10"
+            aciertosTextView.text = "$aciertos/10"
         }
         else {
             wrongAudio.start()

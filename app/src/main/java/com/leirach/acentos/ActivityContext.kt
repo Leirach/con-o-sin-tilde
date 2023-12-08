@@ -18,13 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.leirach.acentos.db.AcentosViewModel
 import com.leirach.acentos.db.Contexto
 import com.leirach.acentos.db.LeaderboardItem
-import kotlinx.android.synthetic.main.activity_context.*//view
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//import kotlinx.android.synthetic.main.activity_regla_general.*
 
 
 class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
@@ -136,7 +134,7 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
     private fun resetGame() {
         curIndex = 0
         aciertos = 0
-        textViewAciertos.text = "0/10"
+        aciertosTextView.text = "0/10"
         stopwatch.base = SystemClock.elapsedRealtime();
         startGame()
     }
@@ -154,7 +152,7 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
         if (answer == curWord.correct) {
             correctAudio.start()
             aciertos++
-            textViewAciertos.text = "$aciertos/10"
+            aciertosTextView.text = "$aciertos/10"
             delayTime = 600
         }
         else {
@@ -172,14 +170,14 @@ class ActivityContext : AppCompatActivity(),  GameEndDialogHandler {
 
     private fun showCorrectAnswer(selected: Int, correct: Int) {
         when (selected) {
-            1 -> opt1.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
-            2 -> opt2.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
-            3 -> opt3.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
+            1 -> bOpt1.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
+            2 -> bOpt2.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
+            3 -> bOpt3.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
         }
         when (correct) {
-            1 -> opt1.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
-            2 -> opt2.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
-            3 -> opt3.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
+            1 -> bOpt1.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
+            2 -> bOpt2.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
+            3 -> bOpt3.setBackgroundColor(ContextCompat.getColor(this, R.color.success))
         }
     }
 

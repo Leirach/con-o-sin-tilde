@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:exported="false">
         <activity
             android:name="com.leirach.acentos.ExplanationActivity"
             android:parentActivityName="com.leirach.acentos.MainActivity"/>
@@ -35,11 +36,12 @@
         <activity
             android:name="com.leirach.acentos.ActivityReglaGeneral"
             android:parentActivityName="com.leirach.acentos.MainActivity" />
-        <activity android:name="com.leirach.acentos.MainActivity">
+        <activity android:name="com.leirach.acentos.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
